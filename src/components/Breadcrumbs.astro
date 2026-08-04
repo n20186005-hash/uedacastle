@@ -1,0 +1,9 @@
+---
+interface Crumb { label: string; href?: string; }
+interface Props { items: Crumb[]; }
+const { items } = Astro.props;
+---
+<nav class="breadcrumbs" aria-label="パンくずリスト">
+  <a href="/">ホーム</a>
+  {items.map((item) => item.href ? <span><a href={item.href}>{item.label}</a></span> : <span aria-current="page">{item.label}</span>)}
+</nav>

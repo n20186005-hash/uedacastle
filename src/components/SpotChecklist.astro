@@ -1,0 +1,21 @@
+---
+import { spots } from "../data/spots";
+---
+<div class="checklist" data-spot-checklist>
+  <div class="checklist-head">
+    <div><strong>歩きたい場所を保存</strong><div class="small muted">端末内に保存し、URLで共有できます。</div></div>
+    <div class="check-count"><strong data-check-count>0</strong><span>か所</span></div>
+  </div>
+  <div class="check-grid">
+    {spots.map((spot) => (
+      <label class="spot-check">
+        <input type="checkbox" data-spot-id={spot.id} />
+        <span><strong>{spot.number}. {spot.name}</strong><small>{spot.duration}・{spot.status}</small></span>
+      </label>
+    ))}
+  </div>
+  <div class="checklist-actions">
+    <button class="btn btn-primary btn-sm" type="button" data-share-spots>リストを共有</button>
+    <button class="btn btn-outline btn-sm" type="button" data-reset-spots>すべて外す</button>
+  </div>
+</div>

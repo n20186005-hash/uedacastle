@@ -1,0 +1,14 @@
+---
+interface Props { class?: string; }
+const { class: className = "brand-mark" } = Astro.props;
+---
+<svg class={className} viewBox="0 0 72 72" role="img" aria-label="城門と六文を組み合わせたサイトロゴ">
+  <rect width="72" height="72" rx="18" fill="currentColor" />
+  <g fill="#f3ebdd">
+    <path d="M13 36h46v4H13zM18 33l9-10h18l9 10H18zM26 19h20v4H26z" />
+  </g>
+  <g fill="#a52a2f">
+    <circle cx="25" cy="50" r="3.4"/><circle cx="36" cy="50" r="3.4"/><circle cx="47" cy="50" r="3.4"/>
+    <circle cx="25" cy="59" r="3.4"/><circle cx="36" cy="59" r="3.4"/><circle cx="47" cy="59" r="3.4"/>
+  </g>
+</svg>

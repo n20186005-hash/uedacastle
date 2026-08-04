@@ -1,0 +1,69 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import Photo from "../../components/Photo.astro";
+import CTA from "../../components/CTA.astro";
+import { foodThemes, eatingExamples } from "../../data/food";
+---
+<BaseLayout title="上田城周辺のグルメ" description="上田城周辺で食べたい美味だれ焼き鳥、上田あんかけ焼きそば、信州そば、みすゞ飴、柳町の発酵食品と店選びのヒント。">
+  <PageHero eyebrow="Food & town" title="城下町グルメ" description="何を食べるかだけでなく、昼・夕方・持ち歩きの時間帯から選ぶ。上田城の前後に無理なく組み込める食のガイドです。" />
+
+  <section class="section">
+    <div class="container">
+      <div class="food-grid">
+        {foodThemes.map((food) => (
+          <article class="food-card" id={food.id} data-reveal>
+            <img src={food.image} alt={food.alt} loading="lazy" />
+            <div class="food-card-body"><span class="tag" style="border-color:rgba(255,255,255,.28)">{food.area}</span><h2>{food.name}</h2><p>{food.lead}</p></div>
+          </article>
+        ))}
+      </div>
+      <div class="grid-2" style="margin-top:1.4rem">
+        {foodThemes.map((food) => <div class="card"><div class="card-body"><h3>{food.name}の組み込み方</h3><p>{food.howToEnjoy}</p></div></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="container">
+      <span class="eyebrow">Nearby examples</span><h2 class="section-title">上田城から歩ける食事候補</h2>
+      <p class="section-lede">営業時間は変わりやすいため、固定のランキングではなく「旅程に入れやすい代表例」として掲載しています。出発当日に店舗の発信・電話等で再確認してください。</p>
+      <div style="overflow-x:auto">
+        <table class="restaurant-table">
+          <thead><tr><th>店・ジャンル</th><th>城から</th><th>時間の目安</th><th>向いている使い方</th><th>注意</th></tr></thead>
+          <tbody>
+            {eatingExamples.map((item) => <tr><td><strong>{item.name}</strong><br /><span class="small muted">{item.category}</span></td><td>{item.walk}</td><td>{item.hours}</td><td>{item.point}</td><td>{item.verify}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <div class="notice" style="margin-top:1.4rem"><span class="notice-icon">食</span><p>人気店では並び・売切れ・現金のみの場合があります。博物館の最終入館を優先する日は、先に城内を見てから遅めの昼食にするより、11時台に食事を済ませる方が安全です。</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split reverse">
+      <Photo src="/images/yanagimachi.webp" alt="歴史的な町家が並ぶ柳町" creditId="yanagimachi" credit="Suikotei / CC BY 4.0" />
+      <div data-reveal>
+        <span class="eyebrow">Yanagimachi</span>
+        <h2 class="section-title">上田城から徒歩約10分、発酵の町へ。</h2>
+        <p>柳町は旧北国街道の面影を残す通り。酒、ワイン、味噌、パン、そば、甘味が町家の景観と一緒に楽しめます。</p>
+        <p><strong>おすすめの流れ：</strong>上田城 → 博物館 → 柳町で昼食 → 味噌・酒・パンなどを一品 → 海野町 → 上田駅。</p>
+        <p>通り自体は長くないため、店を詰め込みすぎず、町家の外観や水路も見る時間を残します。</p>
+        <a class="btn btn-ink" href="/routes/#half-day">半日ルートへ</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="container">
+      <span class="eyebrow">By time of day</span><h2 class="section-title">時間帯で失敗しない選び方</h2>
+      <div class="grid-3">
+        <article class="card" style="color:var(--ink)"><div class="card-body"><span class="tag tag-red">10:30–13:30</span><h3>信州そば・あんかけ焼きそば</h3><p>昼営業の店を優先。行列前か、売切れ前に入ります。櫓と博物館の開館時間も忘れずに。</p></div></article>
+        <article class="card" style="color:var(--ink)"><div class="card-body"><span class="tag tag-moss">13:00–16:00</span><h3>柳町・甘味・土産</h3><p>昼食後の散歩向き。志゛まんやき、みすゞ飴、発酵食品を持ち帰りに。</p></div></article>
+        <article class="card" style="color:var(--ink)"><div class="card-body"><span class="tag tag-red">17:00以降</span><h3>美味だれ焼き鳥</h3><p>夕方営業が中心。ニンニクの強さやたれの個性を店ごとに食べ比べます。</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-sm"><div class="container"><CTA title="食事を入れた半日ルートをつくる。" text="城内の時間、柳町、信州そばを一つのURLにまとめられます。" href="/routes/#planner" label="ルートを作成" /></div></section>
+</BaseLayout>

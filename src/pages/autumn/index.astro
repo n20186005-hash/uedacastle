@@ -1,0 +1,14 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import Photo from "../../components/Photo.astro";
+import CTA from "../../components/CTA.astro";
+---
+<BaseLayout title="上田城の紅葉" description="上田城跡公園の紅葉スポット、ケヤキ並木、本丸堀、尼ヶ淵の撮影、60分モデルルート、冬季休館の注意。">
+  <PageHero eyebrow="Autumn" title="上田城の紅葉" description="赤いモミジだけでなく、黄色いケヤキ、暗い水堀、石垣をつなぐ。秋の上田城を立体的に歩きます。" />
+  <section class="section"><div class="container split"><Photo src="/images/autumn.webp" alt="上田城跡公園の赤いモミジ" creditId="autumn" credit="Yuya Sekiguchi / CC BY 2.0" loading="eager" /><div><span class="eyebrow">Three colors</span><h2 class="section-title">赤、黄、石の灰色を探す。</h2><p><strong>モミジ：</strong>本丸周辺の赤。<br /><strong>ケヤキ：</strong>遊歩道の黄と落葉。<br /><strong>石垣・水堀：</strong>色を引き締める城の骨格。</p><p>紅葉だけを画面いっぱいにせず、櫓や堀を入れると「上田城の秋」であることが伝わります。</p></div></div></section>
+  <section class="section section-paper"><div class="container"><h2 class="section-title">紅葉の60分ルート</h2><div class="route-card" style="max-width:850px"><div class="route-time"><strong>60</strong><span>MINUTES<br />約1.6km</span></div><div class="route-body"><h3>ケヤキ並木から本丸、水堀へ</h3><p class="route-path">二の丸橋 → ケヤキ並木 → 東虎口櫓門 → 本丸堀 → 西櫓 → 尼ヶ淵</p><ul class="route-points"><li>朝は本丸堀の反射と逆光</li><li>午後は尼ヶ淵から西櫓を見上げる</li><li>落葉後は土塁の形も観察</li></ul></div></div></div></section>
+  <section class="section section-dark"><div class="container"><div class="notice" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:white"><span class="notice-icon" style="color:#f0bfc1">休</span><p><strong>内部見学の注意：</strong>南櫓・北櫓は例年11月中旬頃から翌3月まで冬季休館です。紅葉の遅い年は、色づきと内部公開の時期がずれる可能性があります。</p></div><div class="grid-3" style="margin-top:2rem"><article><h2>ケヤキ並木</h2><p>堀跡の低い道に落葉が重なり、近代鉄道の記憶も感じられます。</p></article><article><h2>本丸水堀</h2><p>無風の朝は水面の反射。葉の色と土塁の曲線を一緒に。</p></article><article><h2>尼ヶ淵</h2><p>崖上の櫓と紅葉を下から。雨後や落葉時は足元に注意。</p></article></div></div></section>
+  <section class="section"><div class="narrow prose"><h2>出発前の確認</h2><ul><li>色づき情報と落葉の進み方</li><li>紅葉祭など催事日と交通規制</li><li>櫓の冬季休館開始日</li><li>朝夕の冷え込みと日没時間</li></ul></div></section>
+  <section class="section section-sm"><div class="container"><CTA title="紅葉の後は、柳町へ。" text="城内の60分と、発酵の町・柳町を組み合わせた半日ルートがあります。" href="/routes/#half-day" label="半日ルートを見る" /></div></section>
+</BaseLayout>

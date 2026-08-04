@@ -1,0 +1,8 @@
+---
+interface Props { title: string; text: string; href: string; label: string; }
+const { title, text, href, label } = Astro.props;
+---
+<div class="cta-banner" data-reveal>
+  <div><h2>{title}</h2><p>{text}</p></div>
+  <a class="btn btn-light" href={href}>{label} <span aria-hidden="true">→</span></a>
+</div>

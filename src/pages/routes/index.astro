@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import RoutePlanner from "../../components/RoutePlanner.astro";
+import SpotChecklist from "../../components/SpotChecklist.astro";
+import Photo from "../../components/Photo.astro";
+import CTA from "../../components/CTA.astro";
+import { routes } from "../../data/routes";
+---
+<BaseLayout title="上田城の散策ルート" description="30分・60分・120分の上田城散策ルート、柳町までの半日コース、段差を減らしたルート、写真撮影ルートを紹介。">
+  <PageHero eyebrow="Routes" title="散策ルート" description="時間だけでなく、博物館、段差、写真、食事まで含めて選ぶ。上田城を『門前で終わらせない』ための歩き方です。" />
+  <section class="section">
+    <div class="container">
+      <div class="route-cards">
+        {routes.map((route) => (
+          <article class="route-card" id={route.id} data-reveal>
+            <div class="route-time"><strong>{route.minutes}</strong><span>MINUTES<br />{route.distance}</span></div>
+            <div class="route-body"><span class="small muted">{route.subtitle}</span><h2>{route.title}</h2><p class="route-path">{route.steps.join(" → ")}</p><ul class="route-points">{route.suitable.map((item) => <li>{item}</li>)}</ul><p class="small muted">{route.note}</p></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark"><div class="container"><RoutePlanner /></div></section>
+
+  <section class="section section-paper" id="half-day">
+    <div class="container split reverse">
+      <Photo src="/images/yanagimachi.webp" alt="柳町の歴史的な町並み" creditId="yanagimachi" credit="Suikotei / CC BY 4.0" />
+      <div data-reveal>
+        <span class="eyebrow">Half-day · 4 hours</span>
+        <h2 class="section-title">上田城と柳町、城下町半日コース</h2>
+        <p><strong>上田駅 → 上田城 → 上田市立博物館 → 柳町 → 海野町 → 上田駅</strong></p>
+        <p>城内を約90分歩き、徒歩約10分で柳町へ。旧北国街道の町家、酒・味噌などの発酵文化、そばや甘味を組み合わせます。</p>
+        <ul>
+          <li>午前：上田城の外観と尼ヶ淵</li>
+          <li>11時台：博物館または櫓内部</li>
+          <li>昼：大手・柳町で信州そば</li>
+          <li>午後：柳町の町家と土産、海野町を経て駅へ</li>
+        </ul>
+        <p class="small muted">店の営業は曜日・売切れで変わるため、食事候補を二つ用意しておくと安心です。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid-2">
+      <article class="card" data-reveal><div class="card-body"><span class="tag tag-moss">段差を減らす</span><h2>北側から本丸へ入る穏やかルート</h2><p>北側駐車場または二の丸橋から東虎口櫓門、本丸、眞田神社、西櫓外観へ。尼ヶ淵への階段は使わず、二の丸へ戻ります。</p><p class="small muted">車椅子・ベビーカーは路面状況や催事動線が変わる場合があるため、現地案内を優先してください。</p></div></article>
+      <article class="card" data-reveal><div class="card-body"><span class="tag tag-red">Photography</span><h2>朝と夕方の写真ルート</h2><p>朝は東虎口櫓門と本丸堀、午後は南櫓の石垣、夕方は尼ヶ淵から西櫓。季節写真は光の向きと混雑を見て順序を入れ替えます。</p><p class="small muted">三脚や長時間の場所占有は、催事や混雑時の通行を妨げないよう配慮してください。</p></div></article>
+    </div>
+  </section>
+
+  <section class="section section-paper"><div class="container"><h2 class="section-title">自分の見どころリスト</h2><p class="section-lede">歩きたい場所を選び、現地用のURLとして保存できます。</p><div style="margin-top:2rem"><SpotChecklist /></div></div></section>
+  <section class="section section-sm"><div class="container"><CTA title="ルートが決まったら、入口を決める。" text="上田駅からの徒歩、北・南駐車場の違い、催事期の注意を確認します。" href="/access/" label="アクセスを見る" /></div></section>
+</BaseLayout>

@@ -1,0 +1,40 @@
+<form class="planner" data-route-planner id="planner">
+  <div class="planner-grid">
+    <div>
+      <span class="eyebrow">Route builder</span>
+      <h2 class="section-title">あなたの上田城ルート</h2>
+      <fieldset class="fieldset">
+        <legend>使える時間</legend>
+        <div class="choice-row">
+          <label class="choice"><input type="radio" name="time" value="30" /><span>30分</span></label>
+          <label class="choice"><input type="radio" name="time" value="60" checked /><span>60分</span></label>
+          <label class="choice"><input type="radio" name="time" value="120" /><span>120分</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="fieldset">
+        <legend>組み込みたいこと</legend>
+        <label class="check-choice"><input type="checkbox" name="museum" />博物館・櫓の内部も見たい</label>
+        <label class="check-choice"><input type="checkbox" name="gentle" />階段と急な坂をできるだけ避けたい</label>
+      </fieldset>
+      <fieldset class="fieldset">
+        <legend>散策後の寄り道</legend>
+        <div class="choice-row">
+          <label class="choice"><input type="radio" name="food" value="none" checked /><span>寄り道なし</span></label>
+          <label class="choice"><input type="radio" name="food" value="soba" /><span>信州そば</span></label>
+          <label class="choice"><input type="radio" name="food" value="yanagimachi" /><span>柳町</span></label>
+        </div>
+      </fieldset>
+      <button class="btn btn-primary" type="submit">ルートをつくる</button>
+    </div>
+    <div class="planner-result" data-route-result>
+      <span class="tag" style="border-color:rgba(255,255,255,.25)">おすすめ</span>
+      <h3 data-route-title>60分・城の輪郭を読む標準コース</h3>
+      <p class="route-output" data-route-path>二の丸橋 → 東虎口櫓門 → 真田石 → 眞田神社 → 真田井戸 → 西櫓 → 尼ヶ淵</p>
+      <p data-route-note>初めての上田城に。櫓門だけでなく、城を守った地形まで歩きます。</p>
+      <div class="planner-actions">
+        <button class="btn btn-light btn-sm" type="button" data-share-route>このルートを共有</button>
+        <a class="btn btn-ghost btn-sm" href="/access/">アクセスを見る</a>
+      </div>
+    </div>
+  </div>
+</form>

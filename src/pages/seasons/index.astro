@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import SeasonSwitcher from "../../components/SeasonSwitcher.astro";
+import CTA from "../../components/CTA.astro";
+---
+<BaseLayout title="四季の上田城" description="春の桜、夏のケヤキ並木、秋の紅葉、冬の地形観察。上田城を季節ごとに歩く見どころと注意点。">
+  <PageHero eyebrow="Seasons" title="四季の上田城" description="季節が変わると、主役となる場所も歩く順番も変わります。写真だけでなく、混雑・開館・足元まで含めて計画します。" />
+  <section class="section section-dark"><div class="container"><SeasonSwitcher /></div></section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Season planner</span><h2 class="section-title">季節別・先に確認すること</h2>
+      <div class="grid-4">
+        <article class="card"><div class="card-body"><span class="tag tag-red">春</span><h3>開花と交通規制</h3><p>満開予想より、直前の開花状況と催事日の駐車ルールを優先。朝の入園は公園が24時間開いている利点を生かせます。</p></div></article>
+        <article class="card"><div class="card-body"><span class="tag tag-moss">夏</span><h3>暑さと木陰</h3><p>朝に尼ヶ淵、昼に博物館、午後にケヤキ並木。日陰の少ない広場を暑い時間帯に長く歩かない構成に。</p></div></article>
+        <article class="card"><div class="card-body"><span class="tag tag-red">秋</span><h3>色づきと冬季休館</h3><p>紅葉の進み方と櫓の冬季休館開始を同時に確認。11月中旬以降は内部見学の可否が変わります。</p></div></article>
+        <article class="card"><div class="card-body"><span class="tag">冬</span><h3>凍結と日没</h3><p>尼ヶ淵の階段を無理に使わず、落葉後の土塁と堀を上から観察。日没が早いので午後遅くの到着は短縮ルートに。</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="container grid-2">
+      <article class="card"><div class="card-image wide"><img src="/images/hero-spring.webp" alt="桜の上田城" loading="lazy" /></div><div class="card-body"><span class="eyebrow">Sakura</span><h2>上田城の桜を歩く</h2><p>東虎口櫓門、本丸堀、尼ヶ淵を、人混みと光の向きに合わせてつなぎます。</p><a class="btn btn-outline btn-sm" href="/sakura/">桜ガイド</a></div></article>
+      <article class="card"><div class="card-image wide"><img src="/images/autumn.webp" alt="上田城跡公園の紅葉" loading="lazy" /></div><div class="card-body"><span class="eyebrow">Autumn</span><h2>上田城の紅葉を歩く</h2><p>ケヤキ並木、本丸堀、尼ヶ淵を、赤・黄・石垣の異なる景観で巡ります。</p><a class="btn btn-outline btn-sm" href="/autumn/">紅葉ガイド</a></div></article>
+    </div>
+  </section>
+  <section class="section section-sm"><div class="container"><CTA title="季節に合わせて、ルートを調整。" text="見学時間と博物館の希望から、現地向けの歩き方を作ります。" href="/routes/#planner" label="ルートをつくる" /></div></section>
+</BaseLayout>

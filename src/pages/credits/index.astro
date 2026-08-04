@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import { imageCredits } from "../../data/images";
+---
+<BaseLayout title="写真・資料について" description="上田城を歩くで使用するWikimedia Commons写真の作者、ライセンス、加工内容、資料確認方針。">
+  <PageHero eyebrow="Credits" title="写真・資料について" description="写真は再利用条件を確認できる実写素材のみを使用し、作者・ライセンス・加工内容を一枚ずつ記録しています。" />
+  <section class="section">
+    <div class="container">
+      <div class="notice" style="margin-bottom:2rem"><span class="notice-icon">写</span><p>写真の著作権は各作者に帰属します。サイトコードのMITライセンスには写真は含まれません。CC BY-SA写真を加工・再配布する場合は、各ライセンスの継承条件を確認してください。</p></div>
+      <div class="credit-list">
+        {imageCredits.map((image) => (
+          <article class="credit-item" id={image.id}>
+            <img src={image.local} alt={image.title} loading="lazy" />
+            <div><h2>{image.title}</h2><p><strong>作者：</strong>{image.author}</p><p><strong>ライセンス：</strong><a href={image.licenseUrl} target="_blank" rel="license noreferrer">{image.license}</a></p><p><strong>加工：</strong>{image.changes}</p><p><a href={image.sourceUrl} target="_blank" rel="noreferrer">Wikimedia Commons の原典ページ</a></p></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="section section-paper"><div class="narrow prose"><h2>資料の扱い</h2><p>歴史、施設、料金、交通、駐車場は、上田市、上田市立博物館、信州上田観光協会などの公開情報を中心に確認しています。</p><p>真田石や真田井戸の抜け穴など、確証のない話は「伝承」と明記します。営業時間・料金・駐車場・季節情報は変動するため、出発前の再確認を促します。</p><h2>非公式サイトであること</h2><p>本サイトは上田市、上田市立博物館、眞田神社、信州上田観光協会の公式サイトではありません。ロゴも独自制作で、既存団体の標章を模倣していません。</p></div></section>
+</BaseLayout>

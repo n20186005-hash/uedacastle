@@ -1,0 +1,62 @@
+---
+import { spots } from "../data/spots";
+const mapSpots = spots.filter((spot) => ["east-gate", "south-turret", "sanada-shrine", "sanada-well", "west-turret", "amagafuchi", "keyaki", "museum"].includes(spot.id));
+const coordinates: Record<string, [number, number]> = {
+  "east-gate": [500, 250],
+  "south-turret": [540, 300],
+  "sanada-shrine": [380, 245],
+  "sanada-well": [315, 205],
+  "west-turret": [208, 342],
+  "amagafuchi": [310, 450],
+  "keyaki": [585, 135],
+  "museum": [615, 235],
+};
+---
+<div class="map-shell" data-reveal>
+  <div class="castle-map">
+    <svg viewBox="0 0 760 570" role="img" aria-labelledby="map-title map-desc">
+      <title id="map-title">上田城跡公園の見どころ概略図</title>
+      <desc id="map-desc">東虎口櫓門、本丸、尼ヶ淵、博物館、ケヤキ並木などの位置関係を示す簡略地図です。</desc>
+      <path class="map-water" d="M0 475 C160 430 230 505 390 460 C540 418 625 465 760 425 L760 570 L0 570 Z" />
+      <path class="map-land" d="M118 85 L635 72 L690 175 L661 365 L535 418 L168 405 L91 305 Z" />
+      <path class="map-moat" d="M210 145 C300 90 505 98 562 150 C615 198 608 315 548 350 C468 396 270 394 194 335 C142 295 144 194 210 145 Z" />
+      <path class="map-wall" d="M246 165 L490 148 L545 204 L526 318 L433 356 L252 333 L195 280 L207 205 Z" />
+      <path class="map-path" d="M675 180 C625 190 602 214 572 242 C530 280 504 320 450 370" />
+      <path class="map-path" d="M615 78 L615 367" />
+      <rect class="map-wood" x="477" y="231" width="38" height="33" rx="3" />
+      <rect class="map-wood" x="501" y="280" width="31" height="34" rx="3" />
+      <rect class="map-wood" x="182" y="320" width="35" height="32" rx="3" />
+      <rect class="map-green" x="315" y="198" width="105" height="70" rx="16" />
+      <rect class="map-green" x="575" y="90" width="48" height="280" rx="20" />
+      <rect x="593" y="207" width="74" height="52" rx="5" fill="#b5ab9a" />
+      <text class="map-label" x="315" y="180">本丸</text>
+      <text class="map-label" x="603" y="118" transform="rotate(90 603 118)">ケヤキ並木遊歩道</text>
+      <text class="map-label" x="276" y="514">尼ヶ淵・旧千曲川分流</text>
+      <text class="map-label" x="590" y="282">二の丸</text>
+      {mapSpots.map((spot) => {
+        const [x, y] = coordinates[spot.id] ?? [0, 0];
+        return (
+          <g class="map-pin" transform={`translate(${x} ${y})`} data-map-pin={spot.id} role="button" tabindex="0" aria-label={`${spot.number}. ${spot.name}`} aria-pressed={spot.id === "east-gate" ? "true" : "false"}>
+            <circle r="14" />
+            <text text-anchor="middle" dominant-baseline="central">{spot.number}</text>
+          </g>
+        );
+      })}
+    </svg>
+  </div>
+  <aside class="map-panel" aria-live="polite">
+    {mapSpots.map((spot, index) => (
+      <div data-map-card={spot.id} hidden={index !== 0}>
+        <span class="tag tag-red">{spot.status}</span>
+        <h3>{spot.name}</h3>
+        <p>{spot.summary}</p>
+        <div class="map-facts">
+          <div class="map-fact"><span>目安</span><strong>{spot.duration}</strong></div>
+          <div class="map-fact"><span>料金</span><strong>{spot.fee}</strong></div>
+        </div>
+        <p class="small muted" style="margin-top:1rem">撮影のヒント：{spot.photoTip}</p>
+        <a class="btn btn-outline btn-sm" href={`/highlights/#${spot.id}`}>詳しく読む</a>
+      </div>
+    ))}
+  </aside>
+</div>

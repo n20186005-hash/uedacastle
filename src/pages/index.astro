@@ -1,0 +1,202 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import Photo from "../components/Photo.astro";
+import CastleMap from "../components/CastleMap.astro";
+import RoutePlanner from "../components/RoutePlanner.astro";
+import SpotChecklist from "../components/SpotChecklist.astro";
+import SeasonSwitcher from "../components/SeasonSwitcher.astro";
+import CTA from "../components/CTA.astro";
+import { site } from "../data/site";
+import { routes } from "../data/routes";
+import { foodThemes } from "../data/food";
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "TouristAttraction",
+    name: "上田城跡公園",
+    alternateName: "上田城",
+    description: site.description,
+    address: { "@type": "PostalAddress", addressRegion: "長野県", addressLocality: "上田市", streetAddress: "二の丸6263番地イ", addressCountry: "JP" },
+    geo: { "@type": "GeoCoordinates", latitude: site.coordinates.latitude, longitude: site.coordinates.longitude },
+    isAccessibleForFree: true,
+    publicAccess: true,
+    touristType: ["歴史旅行", "城郭", "桜", "紅葉"],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      { "@type": "Question", name: "上田城に天守はありますか？", acceptedAnswer: { "@type": "Answer", text: "現在、見学できる天守はありません。櫓、櫓門、石垣、土塁、堀、尼ヶ淵の地形が主な見どころです。" } },
+      { "@type": "Question", name: "上田城跡公園は無料ですか？", acceptedAnswer: { "@type": "Answer", text: "公園は24時間入園でき、無料です。上田市立博物館と南櫓・北櫓の内部見学は有料です。" } },
+      { "@type": "Question", name: "見学時間はどのくらいですか？", acceptedAnswer: { "@type": "Answer", text: "外観中心なら30〜60分、博物館と櫓内部まで含めるなら約2時間が目安です。" } },
+    ],
+  },
+];
+---
+<BaseLayout title={site.name} schema={schema}>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="hero-kicker">Sanada’s fortified town · Shinshu</span>
+        <h1 class="display-title"><small>二度、徳川の大軍を退けた真田の城</small>天守はなくても、<br />物語は残っている。</h1>
+        <p class="hero-lede">門を撮って終わらない。西櫓、尼ヶ淵、土塁、水堀を歩きながら、上田城がなぜ「難攻不落」と呼ばれたのかを一時間で読み解きます。</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#map">見どころを地図で見る <span aria-hidden="true">↓</span></a>
+          <a class="btn btn-light" href="#planner">散策ルートをつくる <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <aside class="hero-panel" aria-label="上田城の基本情報">
+        <dl>
+          {site.quickFacts.map((fact) => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
+        </dl>
+        <p class="photo-note">Photo: Hiroaki Kaneko / CC BY-SA 3.0（加工：WebP変換・表示時トリミング）</p>
+      </aside>
+    </div>
+  </section>
+
+  <div class="quick-strip">
+    <div class="container quick-grid">
+      {site.quickFacts.map((fact) => <div class="quick-item"><span class="quick-label">{fact.label}</span><strong class="quick-value">{fact.value}</strong></div>)}
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="Why Ueda Castle" title="天守がない上田城で、何を見る？" description="上田城の価値は、巨大な建物ではなく、戦い・地形・保存の時間が同じ場所で読めることにあります。" />
+      <div class="grid-3" style="margin-top:2.5rem">
+        <article class="reason-card" data-reveal><div class="number">01</div><h3>二度の上田合戦</h3><p>1585年と1600年、真田昌幸は徳川軍の進撃を阻みました。城門だけでなく、城下町と地形を含む防御の物語です。</p><a href="/history/">合戦の流れを読む →</a></article>
+        <article class="reason-card" data-reveal><div class="number">02</div><h3>天然要害の地形</h3><p>千曲川の分流、尼ヶ淵の崖、土塁、水堀。下から見上げると、上田城の強さが建物の高さではなかったと分かります。</p><a href="/highlights/#amagafuchi">尼ヶ淵を見る →</a></article>
+        <article class="reason-card" data-reveal><div class="number">03</div><h3>現存・再移築・復元</h3><p>西櫓は原位置に現存、南北櫓は買い戻して再移築、櫓門は資料をもとに復元。違いを知ると景色が深くなります。</p><a href="#authenticity">建物の違いを知る →</a></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="container split">
+      <Photo src="/images/amagafuchi.webp" alt="尼ヶ淵から見上げる上田城の櫓と崖" creditId="amagafuchi" credit="Qurren / CC BY-SA 3.0" />
+      <div data-reveal>
+        <span class="eyebrow">Read the terrain</span>
+        <h2 class="section-title">「難攻不落」は、崖の下から見えてくる。</h2>
+        <p>現在の尼ヶ淵は静かな広場ですが、かつて南側には千曲川の分流が流れ、急な崖と一体になって天然の堀をつくりました。</p>
+        <p>東虎口櫓門だけで引き返さず、西櫓から尼ヶ淵へ下りて振り返る。それだけで、平面の城跡が立体的な防御施設として見え始めます。</p>
+        <a class="btn btn-ink" href="/highlights/">城内12の見どころ</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="container">
+      <SectionHeading eyebrow="Four centuries" title="1583年から今へ。城が壊され、戻ってきた時間。" description="今日の上田城は、真田時代そのままの姿ではありません。破城、復興、廃城、再移築、復元という時間の層を歩く場所です。" />
+      <div class="timeline">
+        {[
+          ["1583", "真田昌幸が築城を開始", "上田盆地と千曲川を見渡す地に、実戦的な城と城下町を整えます。"],
+          ["1585", "第一次上田合戦", "約7,000の徳川軍に対し、2,000に満たない真田方が城下を使って抵抗しました。"],
+          ["1600", "第二次上田合戦", "徳川秀忠の大軍を上田で足止めし、進軍を遅らせます。"],
+          ["1601", "破城", "関ヶ原後、真田昌幸・信繁は九度山へ。上田城は徳川方により破壊されました。"],
+          ["1626", "仙石忠政が復興", "現在の城郭建築へつながる復興が始まりますが、1628年の忠政死去で未完成のまま止まります。"],
+          ["1949", "南櫓・北櫓が城址へ戻る", "城外へ移されていた櫓を市民が買い戻し、再び城址へ移築しました。"],
+          ["1994", "東虎口櫓門を復元", "古写真と発掘調査をもとに、現在の代表景観がよみがえりました。"],
+        ].map(([year, title, text]) => <article class="timeline-item" data-reveal><div class="timeline-year">{year}</div><span class="timeline-dot"></span><div class="timeline-body"><h3>{title}</h3><p>{text}</p></div></article>)}
+      </div>
+      <p><a class="btn btn-light" href="/history/">上田城の歴史を詳しく読む</a></p>
+    </div>
+  </section>
+
+  <section class="section" id="authenticity">
+    <div class="container">
+      <SectionHeading eyebrow="What is original?" title="目の前の建物は、いつの上田城か。" description="『本物か復元か』を一括りにせず、それぞれの保存の経緯を知ることが上田城の面白さです。" />
+      <div class="authenticity">
+        <article class="authenticity-card" data-reveal><div class="authenticity-label existing">現存</div><h3>西櫓</h3><p>江戸初期に建てられた場所に残り続ける、上田城唯一の原位置現存櫓。内部は非公開です。</p></article>
+        <article class="authenticity-card" data-reveal><div class="authenticity-label returned">再移築</div><h3>南櫓・北櫓</h3><p>明治期に城外へ移築された江戸期の建物を買い戻し、1949年に城址へ戻しました。</p></article>
+        <article class="authenticity-card" data-reveal><div class="authenticity-label restored">復元</div><h3>東虎口櫓門</h3><p>古写真、発掘調査、建築資料をもとに1994年に復元。現在の正面景観を形づくります。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-paper" id="map">
+    <div class="container">
+      <SectionHeading eyebrow="Interactive map" title="城内地図から、物語の場所を選ぶ。" description="建物だけでなく、堀跡・崖・遊歩道まで含めて位置関係をつかむためのオリジナル概略図です。番号を選ぶと説明が切り替わります。" />
+      <CastleMap />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="Choose your pace" title="30分、60分、120分。時間で選ぶ散策。" description="上田城跡公園は無料で自由に歩けます。内部見学を加える場合だけ、博物館と櫓の開館時間を起点に組み立てます。" />
+      <div class="route-cards">
+        {routes.map((route) => <article class="route-card" data-reveal><div class="route-time"><strong>{route.minutes}</strong><span>MINUTES<br />{route.distance}</span></div><div class="route-body"><span class="small muted">{route.subtitle}</span><h3>{route.title}</h3><p class="route-path">{route.steps.join(" → ")}</p><ul class="route-points">{route.suitable.map((item) => <li>{item}</li>)}</ul><a class="btn btn-outline btn-sm" href={`/routes/#${route.id}`}>ルート詳細</a></div></article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark"><div class="container"><RoutePlanner /></div></section>
+
+  <section class="section section-dark" style="padding-top:0">
+    <div class="container">
+      <SectionHeading eyebrow="Four seasons" title="同じ城でも、歩く理由は季節で変わる。" description="桜だけでなく、新緑、紅葉、落葉後の地形まで。季節ごとに主役となる場所と注意点を切り替えます。" />
+      <SeasonSwitcher />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="Access" title="上田駅から歩いて12分。城下町ごと旅にする。" description="駅から近い城ですが、初めてなら出口・道順・駐車場の高低差まで把握しておくと、現地で迷いません。" />
+      <div class="access-cards" style="margin-top:2rem">
+        <article class="access-card" data-reveal><div class="access-icon">歩</div><h3>上田駅から徒歩</h3><div class="big">約12分</div><p>「お城口」から松尾町方面へ。最短で二の丸橋へ向かう道と、商店街を通る道を選べます。</p></article>
+        <article class="access-card" data-reveal><div class="access-icon">車</div><h3>上田菅平ICから</h3><div class="big">約15分・4km</div><p>北側駐車場は本丸への高低差が少なく、南側は尼ヶ淵に近い一方で階段・坂があります。</p></article>
+        <article class="access-card" data-reveal><div class="access-icon">新</div><h3>東京から新幹線</h3><div class="big">約90分</div><p>北陸新幹線で日帰り圏。軽井沢・長野と組み合わせる場合も上田駅を拠点にできます。</p></article>
+      </div>
+      <div class="notice" style="margin-top:1.4rem"><span class="notice-icon">注</span><p>北側駐車場は工事・催事などにより利用可能台数が変わる場合があります。料金・交通規制とあわせて、出発前に公式発表をご確認ください。</p></div>
+      <p style="margin-top:1.4rem"><a class="btn btn-ink" href="/access/">徒歩ルート・駐車場を確認</a></p>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="container">
+      <SectionHeading eyebrow="Castle-town table" title="城を出たら、上田の味へ。" description="昼は信州そばとあんかけ焼きそば、散歩には甘味、夜は美味だれ焼き鳥。営業時間帯で選ぶと旅程が崩れません。" />
+      <div class="food-grid" style="margin-top:2.2rem">
+        {foodThemes.map((food) => <article class="food-card" data-reveal><img src={food.image} alt={food.alt} loading="lazy" /><div class="food-card-body"><span class="tag" style="border-color:rgba(255,255,255,.28)">{food.area}</span><h3>{food.name}</h3><p>{food.lead}</p></div></article>)}
+      </div>
+      <p class="small muted">※焼き鳥・信州そばの写真は料理イメージを含みます。各写真の撮影地とライセンスは写真クレジットページに明記しています。</p>
+      <p><a class="btn btn-ink" href="/food/">近くの店と食べ方を見る</a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split reverse">
+      <Photo src="/images/yanagimachi.webp" alt="白壁の町家が並ぶ上田市柳町" creditId="yanagimachi" credit="Suikotei / CC BY 4.0" />
+      <div data-reveal>
+        <span class="eyebrow">Half-day walk</span>
+        <h2 class="section-title">上田城から柳町へ。発酵の町を歩く半日。</h2>
+        <p>上田城から柳町までは徒歩約10分。旧北国街道の町家に、酒、味噌、パン、そば、甘味が集まります。</p>
+        <p><strong>上田駅 → 上田城 → 博物館 → 柳町で昼食・買い物 → 海野町 → 上田駅</strong>の順なら、歴史と食を無理なく一つの旅にできます。</p>
+        <a class="btn btn-ink" href="/routes/#half-day">半日コースを見る</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="container">
+      <SectionHeading eyebrow="Save your places" title="歩きたい場所だけ、自分のリストへ。" description="現地で見る場所を選び、同じ端末に保存できます。共有ボタンで選択内容をURLにまとめられます。" />
+      <div style="margin-top:2rem"><SpotChecklist /></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="narrow">
+      <SectionHeading eyebrow="FAQ" title="出発前に知っておきたいこと。" />
+      <div class="faq" style="margin-top:2rem">
+        <details><summary>上田城に天守はありますか？</summary><p>現在、見学できる天守はありません。原位置に残る西櫓、再移築された南櫓・北櫓、復元された東虎口櫓門、土塁、水堀、尼ヶ淵が主な見どころです。</p></details>
+        <details><summary>上田城跡公園は無料ですか？</summary><p>公園は24時間入園でき、無料です。上田市立博物館と南櫓・北櫓の内部は有料で、休館日と冬季休館があります。</p></details>
+        <details><summary>見学時間はどのくらい必要ですか？</summary><p>門と本丸だけなら30分、尼ヶ淵と堀まで歩くなら60分、博物館と櫓内部を含めるなら約120分を見込んでください。</p></details>
+        <details><summary>車椅子やベビーカーで歩けますか？</summary><p>北側駐車場から二の丸・本丸へは比較的高低差を抑えられます。尼ヶ淵への行き来には階段や坂があるため、無理に下りないルートを選びます。</p></details>
+        <details><summary>雨の日でも楽しめますか？</summary><p>博物館と南・北櫓の内部を中心にすれば楽しめます。ただし屋外移動は残るため、休館日と最終入館を先に確認してください。</p></details>
+      </div>
+      <p style="margin-top:1.5rem"><a class="btn btn-outline" href="/faq/">すべての質問を見る</a></p>
+    </div>
+  </section>
+
+  <section class="section section-sm"><div class="container"><CTA title="最初の一時間を、門前だけで終わらせない。" text="時間・博物館・食事の希望から、自分向けの上田城ルートを作れます。" href="/routes/#planner" label="散策ルートをつくる" /></div></section>
+</BaseLayout>

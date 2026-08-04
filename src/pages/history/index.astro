@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import Photo from "../../components/Photo.astro";
+import CTA from "../../components/CTA.astro";
+---
+<BaseLayout title="上田城の歴史" description="真田昌幸の築城、二度の上田合戦、破城、仙石氏の復興、櫓の再移築まで、現在の景色につながる上田城の歴史。">
+  <PageHero eyebrow="History" title="上田城の歴史" description="真田の城として始まり、壊され、別の城主により復興され、市民の手で建物が戻った。現在の景色をつくった四百年をたどります。" />
+  <section class="section">
+    <article class="narrow prose">
+      <p class="lead">上田城の歴史は、真田氏だけで完結しません。1583年の築城、徳川軍との二度の戦い、関ヶ原後の破城、仙石氏による復興、松平氏の時代、明治の廃城、そして市民による櫓の買い戻しまでが、今の城址を形づくっています。</p>
+      <div class="fact-box"><strong>現地で見る視点</strong><p>真田時代の完全な城が残る場所ではなく、各時代の痕跡が重なる場所として歩くと、復元建築も土塁も同じ歴史の一部に見えてきます。</p></div>
+
+      <h2 id="foundation">1583年、真田昌幸が城を築く</h2>
+      <p>真田昌幸は上田盆地の中央、千曲川北岸の河岸段丘に上田城を築き始めました。南側の尼ヶ淵は川の分流と断崖を利用でき、北・東側には城下町と道を組み合わせられる位置でした。</p>
+      <p>上田城は、後世の観光城のように大きな天守を見せるための城ではありません。土塁、水堀、曲がり、城下の道と人の動きを使い、少ない兵でも大軍の動きを崩す実戦的な拠点でした。</p>
+
+      <h2 id="first-battle">1585年、第一次上田合戦</h2>
+      <p>沼田領をめぐる対立から徳川軍が上田へ進攻します。上田市の公式解説では、徳川方は約7,000、真田方は2,000に満たない兵力でした。真田方は城内へ籠るだけでなく、城下町へ敵を引き込み、狭い道と伏兵を使って反撃しました。</p>
+      <div class="quote-panel"><blockquote>「城壁の高さ」ではなく、敵の隊列を崩す地形と町の構造が上田城の武器だった。</blockquote><cite>現地を歩くための要約</cite></div>
+
+      <h2 id="second-battle">1600年、第二次上田合戦</h2>
+      <p>関ヶ原の戦いに向かう徳川秀忠の軍勢が上田を通過しようとした際、真田昌幸と次男・信繁は上田に残りました。徳川方約38,000の進軍は上田で遅れます。</p>
+      <p>「上田だけが理由で関ヶ原に遅れた」と単純化するのではなく、交渉、攻防、行軍判断が重なった出来事として見るのが適切です。それでも、小勢の真田氏が大軍の時間を奪った事実が、上田城の名を広く残しました。</p>
+
+      <h2 id="destruction">1601年、破城と真田氏の退場</h2>
+      <p>関ヶ原後、昌幸と信繁は九度山へ配流され、上田城は徳川方により破壊されました。真田氏の長男・信之は徳川方につき、その後松代へ移ります。現在の櫓が真田時代の建物ではない理由はここにあります。</p>
+
+      <h2 id="sengoku">1626年、仙石忠政が復興</h2>
+      <p>仙石忠政は幕府の許可を得て上田城の復興を始めました。しかし1628年に死去し、工事は未完成のまま止まります。現在の本丸の輪郭や櫓につながる城は、主にこの復興以降の姿です。</p>
+      <p>1706年には松平氏が上田藩主となり、明治まで城と城下を治めました。眞田神社が真田氏だけでなく仙石・松平の歴代城主を祀るのは、この長い城の歴史を反映しています。</p>
+
+      <h2 id="modern">1874年以降、廃城から保存へ</h2>
+      <p>廃城後、建物や土地は払い下げられ、多くの建物が失われました。南櫓と北櫓も城外へ移されましたが、上田の市民が買い戻し、1949年に城址へ再移築しました。</p>
+      <p>東虎口櫓門は古写真と発掘調査に基づき1994年に復元されました。西櫓だけは建てられた位置に残り続けています。現在の上田城は、「失われたものをどう記録し、戻し、伝えるか」という近現代の物語も含んでいます。</p>
+    </article>
+  </section>
+
+  <section class="section section-paper">
+    <div class="container split">
+      <Photo src="/images/south-turret.webp" alt="石垣上に立つ上田城南櫓" creditId="south-turret" credit="Suikotei / CC BY-SA 4.0" />
+      <div data-reveal>
+        <span class="eyebrow">Three ways of survival</span>
+        <h2 class="section-title">残った、戻った、復元された。</h2>
+        <p><strong>西櫓：</strong>原位置に現存。<br /><strong>南櫓・北櫓：</strong>城外から再移築。<br /><strong>東虎口櫓門：</strong>資料をもとに復元。</p>
+        <p>状態を知ったうえで見ると、どれか一つだけを「本物」と呼ぶのではなく、それぞれが城を伝える異なる証拠であることが分かります。</p>
+        <a class="btn btn-ink" href="/highlights/">現地の見どころへ</a>
+      </div>
+    </div>
+  </section>
+  <section class="section section-sm"><div class="container"><CTA title="歴史を、現地の順番で歩く。" text="合戦の話だけでなく、門・本丸・西櫓・尼ヶ淵をつなぐ60分ルートへ。" href="/routes/#standard" label="標準ルートを見る" /></div></section>
+</BaseLayout>

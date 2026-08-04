@@ -1,0 +1,18 @@
+{
+  "name": "上田城を歩く",
+  "short_name": "上田城",
+  "description": "真田の城を一時間で読み解く、上田城と城下町の現地ガイド。",
+  "lang": "ja",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f3ebdd",
+  "theme_color": "#191815",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

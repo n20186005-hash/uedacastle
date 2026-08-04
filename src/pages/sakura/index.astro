@@ -1,0 +1,14 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import Photo from "../../components/Photo.astro";
+import CTA from "../../components/CTA.astro";
+---
+<BaseLayout title="上田城の桜" description="上田城跡公園の桜を楽しむ撮影場所、朝・昼・夜の歩き方、混雑と駐車場の注意、60分モデルルート。">
+  <PageHero eyebrow="Sakura" title="上田城の桜" description="『何日に行くか』より、開花状況・光・混雑で歩く順番を決める。櫓門と桜だけで終わらない春のルートです。" />
+  <section class="section"><div class="container split"><Photo src="/images/hero-spring.webp" alt="桜が咲く上田城東虎口櫓門" creditId="spring" credit="Hiroaki Kaneko / CC BY-SA 3.0" loading="eager" /><div><span class="eyebrow">Best viewpoints</span><h2 class="section-title">春の主役は、三つの高さ。</h2><p><strong>門前：</strong>東虎口櫓門と枝垂れ桜。<br /><strong>堀沿い：</strong>水面、土塁、桜の連なり。<br /><strong>崖下：</strong>尼ヶ淵から櫓と桜を見上げる。</p><p>同じ桜でも、正面・水辺・低い視点をつなぐことで写真に変化が出ます。</p></div></div></section>
+  <section class="section section-paper"><div class="container"><h2 class="section-title">桜の60分ルート</h2><div class="route-card" style="max-width:850px"><div class="route-time"><strong>60</strong><span>MINUTES<br />約1.4km</span></div><div class="route-body"><h3>朝の櫓門から尼ヶ淵へ</h3><p class="route-path">二の丸橋 → 東虎口櫓門 → 本丸堀 → 眞田神社 → 西櫓 → 尼ヶ淵 → ケヤキ並木</p><ul class="route-points"><li>開園時間を気にせず早朝から公園外観を歩ける</li><li>内部見学は9時以降に追加</li><li>催事日は帰路と駐車時間を長めに確保</li></ul></div></div></div></section>
+  <section class="section section-dark"><div class="container grid-3"><article><span class="eyebrow">Morning</span><h2>朝</h2><p>門前の人が少なく、柔らかな光。建物を主役にするなら最優先。</p></article><article><span class="eyebrow">Daytime</span><h2>昼</h2><p>催事と城下町を楽しみやすい一方、門前は混雑。堀沿いへ分散します。</p></article><article><span class="eyebrow">Night</span><h2>夜</h2><p>ライトアップ時は足元と寒暖差に注意。三脚で通路を塞がない配慮を。</p></article></div></section>
+  <section class="section"><div class="narrow prose"><h2>出発前の確認</h2><ul><li>開花状況と天気</li><li>桜まつり等の開催日・交通規制</li><li>特別期間の駐車料金</li><li>博物館・櫓の休館日と最終入館</li></ul><div class="notice"><span class="notice-icon">桜</span><p>例年の時期だけで予約を固定せず、変更可能な交通・宿泊と直前情報を組み合わせるのが安全です。</p></div></div></section>
+  <section class="section section-sm"><div class="container"><CTA title="桜と歴史を、同じ一時間に。" text="博物館を入れるか、柳町へ進むかを選んでルートを調整できます。" href="/routes/#planner" label="春のルートをつくる" /></div></section>
+</BaseLayout>

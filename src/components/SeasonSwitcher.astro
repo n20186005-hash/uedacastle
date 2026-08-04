@@ -1,0 +1,45 @@
+---
+import Photo from "./Photo.astro";
+---
+<div data-season-switcher>
+  <div class="season-tabs" role="tablist" aria-label="季節を選ぶ">
+    <button class="season-tab" type="button" role="tab" aria-selected="true" data-season="spring">春</button>
+    <button class="season-tab" type="button" role="tab" aria-selected="false" data-season="summer">夏</button>
+    <button class="season-tab" type="button" role="tab" aria-selected="false" data-season="autumn">秋</button>
+    <button class="season-tab" type="button" role="tab" aria-selected="false" data-season="winter">冬</button>
+  </div>
+  <div class="season-panel" data-season-panel="spring">
+    <Photo src="/images/hero-spring.webp" alt="桜が咲く上田城東虎口櫓門" creditId="spring" credit="Hiroaki Kaneko / CC BY-SA 3.0" />
+    <div>
+      <span class="eyebrow">Spring</span><h3 class="section-title">門と桜が重なる、最も華やかな季節</h3>
+      <p>東虎口櫓門の枝垂れ桜、本丸の堀沿い、尼ヶ淵の眺めが主役。開花は年により動くため、日付ではなく直前の開花情報で判断します。</p>
+      <ul class="season-list"><li>朝は門前の人が少なく、建物を撮りやすい</li><li>催事期間は駐車料金・交通規制が通常期と異なる</li><li>夜間ライトアップ時も公園内の足元に注意</li></ul>
+      <a class="btn btn-light btn-sm" href="/sakura/">桜の歩き方</a>
+    </div>
+  </div>
+  <div class="season-panel" data-season-panel="summer" hidden>
+    <Photo src="/images/keyaki.webp" alt="夏の緑に包まれるケヤキ並木遊歩道" creditId="keyaki" credit="BehBeh / CC BY-SA 3.0" />
+    <div>
+      <span class="eyebrow">Summer</span><h3 class="section-title">深い緑の中で、堀跡を歩く</h3>
+      <p>夏はケヤキ並木と水堀の緑が中心。日中は暑くなるため、朝に城内、昼に博物館という順序が歩きやすい構成です。</p>
+      <ul class="season-list"><li>木陰の多いケヤキ並木を休憩に使う</li><li>尼ヶ淵は日差しを遮る場所が少ない</li><li>博物館を暑い時間帯へ組み込む</li></ul>
+    </div>
+  </div>
+  <div class="season-panel" data-season-panel="autumn" hidden>
+    <Photo src="/images/autumn.webp" alt="上田城跡公園の鮮やかな紅葉" creditId="autumn" credit="Yuya Sekiguchi / CC BY 2.0" />
+    <div>
+      <span class="eyebrow">Autumn</span><h3 class="section-title">紅葉と石垣が最も深く見える季節</h3>
+      <p>ケヤキ並木、本丸堀、尼ヶ淵周辺をつなぐと、黄・赤・城郭建築の異なる表情を一度に楽しめます。</p>
+      <ul class="season-list"><li>朝夕は葉の透過光を狙う</li><li>11月中旬以降は櫓の冬季休館日に注意</li><li>紅葉祭など催事日は混雑を見込む</li></ul>
+      <a class="btn btn-light btn-sm" href="/autumn/">紅葉の歩き方</a>
+    </div>
+  </div>
+  <div class="season-panel" data-season-panel="winter" hidden>
+    <Photo src="/images/amagafuchi.webp" alt="冬の尼ヶ淵と西櫓" creditId="amagafuchi" credit="Qurren / CC BY-SA 3.0" />
+    <div>
+      <span class="eyebrow">Winter</span><h3 class="section-title">葉が落ちて、城の骨格が見える</h3>
+      <p>華やかさより土塁・堀・崖の輪郭を読む季節。櫓内部は例年冬季休館となるため、外観と地形観察を中心にします。</p>
+      <ul class="season-list"><li>凍結・積雪時は尼ヶ淵への階段を避ける</li><li>落葉後は西櫓と土塁が見通しやすい</li><li>日没が早いため時間に余裕を持つ</li></ul>
+    </div>
+  </div>
+</div>

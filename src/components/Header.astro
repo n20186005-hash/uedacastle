@@ -1,0 +1,22 @@
+---
+import CastleMark from "./CastleMark.astro";
+import { site } from "../data/site";
+const currentPath = Astro.url.pathname;
+---
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="上田城を歩く ホーム">
+      <CastleMark />
+      <span class="brand-copy"><strong>{site.name}</strong><span>{site.englishName}</span></span>
+    </a>
+    <nav class="site-nav" aria-label="主要ナビゲーション" data-menu>
+      <ul class="nav-list">
+        {site.nav.map((item) => (
+          <li><a href={item.href} aria-current={currentPath.startsWith(item.href) ? "page" : undefined}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <a class="header-cta" href="/routes/#planner">ルートをつくる <span aria-hidden="true">→</span></a>
+    <button class="menu-button" type="button" aria-label="メニューを開く" aria-expanded="false" data-menu-button><span></span></button>
+  </div>
+</header>

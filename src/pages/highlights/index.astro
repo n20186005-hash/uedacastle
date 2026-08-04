@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import CastleMap from "../../components/CastleMap.astro";
+import CTA from "../../components/CTA.astro";
+import { spots } from "../../data/spots";
+---
+<BaseLayout title="上田城の見どころ" description="東虎口櫓門、西櫓、尼ヶ淵、眞田神社、真田井戸、土塁、水堀、ケヤキ並木など、上田城12の見どころを解説。">
+  <PageHero eyebrow="Highlights" title="城内12の見どころ" description="建物だけでなく、崖・堀・土塁・近代鉄道の跡まで。『何を見るか』と同時に『なぜ見るか』をまとめました。" />
+  <section class="section section-paper"><div class="container"><CastleMap /></div></section>
+  <section class="section">
+    <div class="container">
+      <div class="legend-box" style="margin-bottom:2rem"><strong>表示の見方：</strong>「現存」は原位置に残る建物、「再移築」は一度城外へ移された建物を戻したもの、「復元」は資料に基づく再建、「伝承」は史実として断定できない物語です。</div>
+      <div class="spot-list">
+        {spots.map((spot) => (
+          <article class="spot-row" id={spot.id} data-reveal>
+            {spot.photo ? <img src={spot.photo} alt={spot.photoAlt ?? spot.name} loading="lazy" /> : <div style="min-height:225px;background:linear-gradient(135deg,#d8cfbe,#a8a194);display:grid;place-items:center;font-family:var(--serif);font-size:3rem;color:rgba(25,24,21,.28)">{String(spot.number).padStart(2,"0")}</div>}
+            <div class="spot-row-body">
+              <div class="spot-row-head"><div><span class="card-index">{String(spot.number).padStart(2,"0")} / {spot.reading}</span><h2>{spot.name}</h2></div><span class="tag tag-red">{spot.status}</span></div>
+              <p><strong>{spot.summary}</strong></p><p>{spot.detail}</p>
+              <div class="card-meta"><span class="tag">目安 {spot.duration}</span><span class="tag">{spot.fee}</span><span class="tag tag-moss">撮影：{spot.photoTip}</span></div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="section section-sm"><div class="container"><CTA title="全部を見る必要はありません。" text="使える時間と体力に合わせて、見どころをつなぐルートを選べます。" href="/routes/" label="散策ルートを選ぶ" /></div></section>
+</BaseLayout>

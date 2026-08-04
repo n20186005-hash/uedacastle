@@ -1,0 +1,37 @@
+---
+import CastleMark from "./CastleMark.astro";
+import { site } from "../data/site";
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="/">
+          <CastleMark />
+          <span class="brand-copy"><strong>{site.name}</strong><span>{site.englishName}</span></span>
+        </a>
+        <p>天守の大きさではなく、地形・櫓・土塁・城下町の物語から上田城を読み解く、非公式の旅行ガイドです。</p>
+      </div>
+      <div>
+        <h2 class="footer-title">城を歩く</h2>
+        <ul class="footer-links">
+          {site.nav.slice(0, 4).map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          <li><a href="/faq/">よくある質問</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer-title">旅を整える</h2>
+        <ul class="footer-links">
+          <li><a href="/food/">城下町グルメ</a></li>
+          <li><a href="/seasons/">四季の上田城</a></li>
+          <li><a href="/credits/">写真・資料について</a></li>
+          <li><a href="/sitemap.xml">サイトマップ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {site.name}. Unofficial travel guide.</span>
+      <span>営業・交通情報は出発前に公式発表をご確認ください。</span>
+    </div>
+  </div>
+</footer>

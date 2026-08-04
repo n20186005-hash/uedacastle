@@ -1,0 +1,77 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import Photo from "../../components/Photo.astro";
+import CTA from "../../components/CTA.astro";
+---
+<BaseLayout title="アクセス・駐車場" description="上田駅から上田城までの徒歩ルート、東京・軽井沢・長野からの鉄道、上田菅平IC、北側・南側駐車場、バリアフリー動線を解説。">
+  <PageHero eyebrow="Access" title="アクセス・駐車場" description="上田駅から徒歩約12分。車なら、駐車場の近さより『どこへ出るか』『高低差があるか』で選びます。" />
+
+  <section class="section">
+    <div class="container split">
+      <Photo src="/images/station.webp" alt="JR・しなの鉄道・上田電鉄の上田駅お城口" creditId="station" credit="Mister0124 / CC BY-SA 4.0" />
+      <div data-reveal>
+        <span class="eyebrow">From Ueda Station</span>
+        <h2 class="section-title">「お城口」から、徒歩約12分。</h2>
+        <ol>
+          <li>上田駅の<strong>お城口</strong>へ出る。</li>
+          <li>松尾町・中央方面へ北上する。</li>
+          <li>市役所・観光会館方面を目印に進む。</li>
+          <li>二の丸橋から城跡公園へ入る。</li>
+        </ol>
+        <p>大きな荷物は駅周辺のコインロッカー等へ預けると、尼ヶ淵の階段や城下町散歩が楽になります。最短路だけでなく、海野町商店街を通る道も選べます。</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=36.4035624,138.2459171" target="_blank" rel="noreferrer">Google マップで開く</a>
+          <a class="btn btn-outline" href="https://maps.apple.com/?ll=36.4035624,138.2459171&q=%E4%B8%8A%E7%94%B0%E5%9F%8E" target="_blank" rel="noreferrer">Apple マップで開く</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="container">
+      <span class="eyebrow">By train</span><h2 class="section-title">主要都市から上田駅へ</h2>
+      <div class="access-cards">
+        <article class="access-card"><h3>東京 → 上田</h3><div class="big">北陸新幹線 約90分</div><p>日帰り可能。帰りの指定席と、上田駅での食事時間まで先に確保すると安心です。</p></article>
+        <article class="access-card"><h3>軽井沢 → 上田</h3><div class="big">新幹線／しなの鉄道</div><p>速さなら新幹線、途中の東信州をゆっくり移動するならしなの鉄道。</p></article>
+        <article class="access-card"><h3>長野 → 上田</h3><div class="big">新幹線／しなの鉄道</div><p>長野市と組み合わせる場合も、上田駅から城まで徒歩で完結します。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Parking</span><h2 class="section-title">北側と南側、駐車場は目的で選ぶ。</h2>
+      <div class="grid-2">
+        <article class="card"><div class="card-body"><span class="tag tag-moss">本丸へ穏やか</span><h3>上田城跡北側駐車場</h3><p><strong>工事・催事などにより利用可能台数が変わる場合があります。</strong></p><p>二の丸・本丸へ高低差を抑えて入りやすく、車椅子用・優先区画があります。東虎口櫓門を最初に見る人向けです。</p></div></article>
+        <article class="card"><div class="card-body"><span class="tag tag-red">尼ヶ淵へ近い</span><h3>上田城跡南側駐車場</h3><p><strong>83台。</strong></p><p>尼ヶ淵広場へ近く、西櫓を下から見たい人に便利。ただし城内へ上がるには階段・坂があります。</p></div></article>
+      </div>
+      <div class="notice" style="margin-top:1.4rem"><span class="notice-icon">料</span><p>通常期は入場後1時間無料、以降1時間ごと100円、当日上限500円。桜・大型連休・紅葉などの特別期間は3時間500円、当日上限1,000円となる案内があります。現地表示を優先してください。</p></div>
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="container">
+      <span class="eyebrow">Museum hours</span><h2 class="section-title">公園はいつでも。内部見学は時間を決めて。</h2>
+      <table class="info-table" style="color:var(--ink)">
+        <tbody>
+          <tr><th>上田城跡公園</th><td>24時間入園可／無料／無休</td></tr>
+          <tr><th>博物館・南北櫓</th><td>9:00–17:00／最終入館16:30</td></tr>
+          <tr><th>主な休館</th><td>水曜、祝日の翌日、12月29日–1月3日ほか。臨時変更あり</td></tr>
+          <tr><th>櫓の冬季休館</th><td>例年11月中旬頃から翌3月まで</td></tr>
+          <tr><th>西櫓</th><td>内部非公開</td></tr>
+          <tr><th>博物館＋櫓共通券</th><td>一般500円／高校生以上の学生300円／小中学生150円</td></tr>
+        </tbody>
+      </table>
+      <p class="small" style="color:rgba(255,255,255,.6);margin-top:1rem">料金・開館日は特別展や催事で変わる場合があります。出発前に公式発表をご確認ください。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid-2">
+      <article class="card"><div class="card-body"><h2>車椅子・ベビーカー</h2><p>北側から二の丸・本丸へ入る動線が比較的穏やかです。尼ヶ淵は階段・坂があるため、上から西櫓を見て引き返すルートも選択肢です。</p></div></article>
+      <article class="card"><div class="card-body"><h2>桜・紅葉・催事日</h2><p>駐車場の特別料金、進入規制、満車が発生しやすいため、上田駅周辺へ停めて徒歩で向かう方法も検討してください。</p></div></article>
+    </div>
+  </section>
+  <section class="section section-sm"><div class="container"><CTA title="入口が決まったら、歩く順番へ。" text="30分・60分・120分から、無理のない散策を選びます。" href="/routes/" label="ルートを選ぶ" /></div></section>
+</BaseLayout>

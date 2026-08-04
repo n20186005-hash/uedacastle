@@ -1,0 +1,15 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  creditId: string;
+  credit: string;
+  class?: string;
+  loading?: "lazy" | "eager";
+}
+const { src, alt, creditId, credit, class: className = "photo-frame", loading = "lazy" } = Astro.props;
+---
+<figure class={className}>
+  <img src={src} alt={alt} loading={loading} decoding="async" />
+  <figcaption>Photo: <a href={`/credits/#${creditId}`}>{credit}</a></figcaption>
+</figure>
