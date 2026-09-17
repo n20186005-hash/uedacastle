@@ -1,0 +1,543 @@
+---
+interface Props {
+  lat?: number;
+  lon?: number;
+  compact?: boolean;
+}
+const { lat = 36.4035624, lon = 138.2459171, compact = false } = Astro.props;
+
+// Server-side fetch at build time (cached into the HTML). Wrapped in try/catch so a
+// network failure during build never breaks the static build; the client re-fetches live.
+// Ueda Castle is an inland castle-park (stone steps, a cliff/gorge "尼ヶ淵", a moat, museums),
+// so the advice logic below is tuned to that geography — no seaside/tidal data is relevant.
+// Open-Meteo has no official weather-alert feed, so "risk" items are derived from severe
+// weather codes + thresholds rather than faked official warnings.
+let initial: string | null = null;
+try {
+  const api =
+    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
+    `&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,uv_index` +
+    `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max` +
+    `&timezone=Asia%2FTokyo&forecast_days=7`;
+  const res = await fetch(api);
+  if (res.ok) initial = JSON.stringify(await res.json());
+} catch {
+  initial = null;
+}
+---
+
+<section
+  class="weather"
+  data-weather
+  data-lat={lat}
+  data-lon={lon}
+  data-compact={compact ? "true" : "false"}
+  data-initial={initial ?? ""}
+  aria-live="polite"
+>
+  <div class="weather-state">天気データを確認中…</div>
+</section>
+
+<style>
+  .weather {
+    --wx-bg: rgba(255, 255, 255, 0.04);
+    --wx-border: rgba(255, 255, 255, 0.12);
+    color: var(--ink, #1c241b);
+    font-family: inherit;
+  }
+  .weather-state {
+    padding: 1.4rem;
+    border: 1px solid var(--wx-border);
+    border-radius: 14px;
+    background: var(--wx-bg);
+    text-align: center;
+    opacity: 0.8;
+  }
+  .wx-error {
+    border-color: rgba(200, 80, 60, 0.4);
+    color: #9a3b2b;
+  }
+  .wx-now {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.6rem;
+    padding: 1.4rem;
+    border: 1px solid var(--wx-border);
+    border-radius: 14px;
+    background: var(--wx-bg);
+  }
+  .wx-temp {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+  .wx-temp .val {
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .wx-temp .unit {
+    font-size: 1.1rem;
+    opacity: 0.7;
+  }
+  .wx-cond {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+  }
+  .wx-cond .icon {
+    font-size: 2rem;
+  }
+  .wx-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.92rem;
+    opacity: 0.85;
+  }
+  .wx-pop {
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(70, 120, 200, 0.16);
+    border: 1px solid rgba(70, 120, 200, 0.4);
+  }
+  .wx-risk {
+    margin-top: 0.8rem;
+    border: 1px solid rgba(165, 42, 47, 0.4);
+    background: rgba(165, 42, 47, 0.1);
+    border-radius: 10px;
+    padding: 0.7rem 0.95rem;
+  }
+  .wx-risk-head {
+    font-weight: 700;
+    color: #9a3b2b;
+  }
+  .wx-risk ul,
+  .wx-advice ul {
+    margin: 0.3rem 0 0 1.1rem;
+    padding: 0;
+  }
+  .wx-risk li,
+  .wx-advice li {
+    margin: 0.28rem 0;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+  .wx-advice {
+    margin-top: 0.9rem;
+  }
+  .wx-advice-head {
+    font-size: 0.85rem;
+    font-weight: 700;
+    opacity: 0.8;
+    margin: 0;
+  }
+  .wx-tabs {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+  .wx-tab {
+    border: 1px solid var(--wx-border);
+    background: var(--wx-bg);
+    color: inherit;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.85rem;
+    opacity: 0.85;
+  }
+  .wx-tab.active {
+    background: rgba(105, 114, 91, 0.22);
+    border-color: rgba(105, 114, 91, 0.5);
+    font-weight: 600;
+    opacity: 1;
+  }
+  .wx-panel {
+    display: none;
+    margin-top: 0.6rem;
+    padding: 0.8rem 0.95rem;
+    border: 1px solid var(--wx-border);
+    border-radius: 10px;
+    background: var(--wx-bg);
+  }
+  .wx-panel.active {
+    display: block;
+  }
+  .wx-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-top: 0.9rem;
+  }
+  .wx-day {
+    padding: 0.7rem 0.4rem;
+    border: 1px solid var(--wx-border);
+    border-radius: 12px;
+    background: var(--wx-bg);
+    text-align: center;
+  }
+  .wx-day .d-name {
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .wx-day .d-icon {
+    font-size: 1.5rem;
+    margin: 0.25rem 0;
+  }
+  .wx-day .d-temp {
+    font-size: 0.85rem;
+    opacity: 0.85;
+  }
+  .wx-day .d-pop {
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 0.15rem;
+  }
+  .wx-foot {
+    margin-top: 0.7rem;
+    font-size: 0.78rem;
+    opacity: 0.6;
+  }
+  @media (max-width: 640px) {
+    .wx-days {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
+
+<script>
+  type DailyRow = {
+    time: string[];
+    weather_code: number[];
+    temperature_2m_max: number[];
+    temperature_2m_min: number[];
+    precipitation_probability_max: number[];
+  };
+  type WxResponse = {
+    current?: {
+      temperature_2m: number;
+      apparent_temperature: number;
+      relative_humidity_2m: number;
+      wind_speed_10m: number;
+      weather_code: number;
+      precipitation: number;
+      uv_index?: number;
+    };
+    daily?: DailyRow;
+  };
+
+  const codeMap: Record<number, { label: string; icon: string }> = {
+    0: { label: "晴れ", icon: "☀️" },
+    1: { label: "大体晴れ", icon: "🌤️" },
+    2: { label: "曇り時々晴れ", icon: "⛅" },
+    3: { label: "曇り", icon: "☁️" },
+    45: { label: "霧", icon: "🌫️" },
+    48: { label: "霧氷", icon: "🌫️" },
+    51: { label: "弱い霧雨", icon: "🌦️" },
+    53: { label: "霧雨", icon: "🌦️" },
+    55: { label: "強い霧雨", icon: "🌧️" },
+    56: { label: "凍る霧雨", icon: "🌧️" },
+    57: { label: "凍る霧雨", icon: "🌧️" },
+    61: { label: "弱い雨", icon: "🌦️" },
+    63: { label: "雨", icon: "🌧️" },
+    65: { label: "強い雨", icon: "🌧️" },
+    66: { label: "凍る雨", icon: "🌧️" },
+    67: { label: "凍る雨", icon: "🌧️" },
+    71: { label: "弱い雪", icon: "🌨️" },
+    73: { label: "雪", icon: "🌨️" },
+    75: { label: "強い雪", icon: "❄️" },
+    77: { label: "霰", icon: "🌨️" },
+    80: { label: "にわか雨", icon: "🌦️" },
+    81: { label: "にわか雨", icon: "🌧️" },
+    82: { label: "激しいにわか雨", icon: "⛈️" },
+    85: { label: "にわか雪", icon: "🌨️" },
+    86: { label: "激しいにわか雪", icon: "❄️" },
+    95: { label: "雷雨", icon: "⛈️" },
+    96: { label: "雷雨・ひょう", icon: "⛈️" },
+    99: { label: "雷雨・ひょう", icon: "⛈️" },
+  };
+
+  function describe(code: number): { label: string; icon: string } {
+    return codeMap[code] ?? { label: "その他", icon: "🌡️" };
+  }
+
+  // Wind speed (km/h) -> Beaufort scale, matching the spec's 5-6级 / ≥7级 thresholds.
+  function windToBeaufort(kmh: number): number {
+    const limits = [1, 6, 12, 20, 29, 39, 50, 62, 75, 89, 103, 118];
+    for (let i = 0; i < limits.length; i++) if (kmh < limits[i]) return i;
+    return 12;
+  }
+
+  const dayNames = ["日", "月", "火", "水", "木", "金", "土"];
+  function dayLabel(iso: string, index: number): string {
+    if (index === 0) return "今日";
+    if (index === 1) return "明日";
+    const d = new Date(iso + "T00:00:00");
+    return dayNames[d.getDay()] + "曜";
+  }
+
+  function cacheKey(lat: number, lon: number): string {
+    return `wx:${lat.toFixed(4)},${lon.toFixed(4)}`;
+  }
+
+  type Advice = { outfit: string[]; activity: string[]; items: string[]; risk: string[] };
+
+  function uniqPush(arr: string[], s: string): void {
+    if (s && !arr.includes(s)) arr.push(s);
+  }
+
+  // Turn raw weather data into tourist-executable advice for an inland castle-park.
+  function buildAdvice(data: WxResponse): Advice {
+    const cur = data.current!;
+    const daily = data.daily!;
+    const code = cur.weather_code;
+    const maxT = daily.temperature_2m_max[0] ?? cur.temperature_2m;
+    const minT = daily.temperature_2m_min[0] ?? cur.temperature_2m;
+    const pop = daily.precipitation_probability_max[0] ?? 0;
+    const beaufort = windToBeaufort(cur.wind_speed_10m);
+    const uv = cur.uv_index;
+
+    const outfit: string[] = [];
+    const activity: string[] = [];
+    const items: string[] = [];
+    const risk: string[] = [];
+
+    const isLightRain = [51, 53, 55, 56, 57, 61, 80].includes(code);
+    const isHeavyRain = [63, 65, 81, 82].includes(code);
+    const isThunder = [95, 96, 99].includes(code);
+    const isSnow = [71, 73, 75, 77, 85, 86].includes(code);
+    const isFog = [45, 48].includes(code);
+    const isClear = [0, 1].includes(code);
+    const isCloudy = [2, 3].includes(code);
+    const tempDiff = maxT - minT;
+
+    // 高温 / 紫外线
+    if (maxT >= 32) {
+      uniqPush(outfit, "気温が高めです。正午前後の外出は避け、軽く通気性の良い服装で。");
+      uniqPush(activity, "屋外の滞在は短めに。日陰の少ない本丸広場は正午を避けて回りましょう。");
+      uniqPush(items, "日焼け止め・サングラス・十分な飲み物・熱中症対策");
+    }
+    if (uv != null && uv >= 5) {
+      uniqPush(outfit, "紫外線が強いので、外出時は日除けを。");
+      uniqPush(items, "日焼け止め・サングラス・帽子");
+    }
+    if (maxT <= 10) {
+      uniqPush(outfit, "気温が低いので、厚手のアウターで防寒を。");
+      uniqPush(items, "厚手のコート・マフラー・手袋");
+    }
+    if (tempDiff > 8) {
+      uniqPush(outfit, "朝と夜の気温差が大きいので、羽織れる上着があると便利です。");
+    }
+
+    // 風
+    if (beaufort >= 7) {
+      uniqPush(risk, "風が非常に強いので、看板や崖際（尼ヶ淵の柵の外）には近づかないでください。");
+      uniqPush(activity, "屋外の高所（櫓の上・崖上）は強風で危険、屋内へ。");
+    } else if (beaufort >= 5) {
+      uniqPush(outfit, "風がやや強いので、帽子は飛ばされないようしっかりと。");
+      uniqPush(activity, "櫓の上や崖上は風に注意。");
+      uniqPush(items, "風を防ぐアウター");
+    }
+
+    // 降水・雪（ inland: cliff/gorge「尼ヶ淵」, stone steps, indoor museums ）
+    if (isThunder) {
+      uniqPush(risk, "雷に注意。山への登頂や木の下での雨宿りは避けてください。");
+      uniqPush(activity, "屋外（崖上・櫓上）の見学は控え、屋内施設を利用してください。");
+    } else if (isHeavyRain) {
+      uniqPush(risk, "雨が強いので、谷や低い場所（尼ヶ淵の沢筋）には近づかないでください。");
+      uniqPush(activity, "長時間の屋外は避け、市立博物館など屋内中心に。");
+      uniqPush(items, "レインコート（風が強いので長い傘は避けて）");
+    } else if (isSnow) {
+      uniqPush(risk, "積雪や凍結で石段や尼ヶ淵が滑りやすいので足元に注意。");
+      uniqPush(outfit, "雪や寒さに対応できる防水の靴と厚手の服装を。");
+      uniqPush(items, "滑り止め靴・厚手の手袋");
+    } else if (isLightRain) {
+      uniqPush(outfit, "小雨です。路面が滑りやすいので、石段・尼ヶ淵は足元に注意。");
+      uniqPush(activity, "屋外の見学は少し我慢し、博物館・櫓内部など屋内を優先。");
+      uniqPush(items, "折りたたみ傘");
+    } else if (pop >= 60) {
+      uniqPush(outfit, "今日は雨が降る可能性が高いので、雨具があると安心です。");
+      uniqPush(activity, "屋外より市内の博物館・櫓内部など屋内を組み込むと安心。");
+      uniqPush(items, "折りたたみ傘またはレインコート");
+    }
+
+    // 霧
+    if (isFog) {
+      uniqPush(risk, "視界が悪いので、崖際や遠望スポットは安全に。");
+      uniqPush(activity, "遠くを見渡す展望より、近場の散策がおすすめ。");
+      uniqPush(items, "マスク（霧・花粉の日も）");
+    }
+
+    // 晴 / 曇
+    if (isClear) {
+      uniqPush(outfit, "天気は良いので、屋外の散策にぴったり。");
+      uniqPush(activity, "本丸からの展望や写真撮影が楽しめます。");
+      if (uv == null || uv < 5) uniqPush(items, "念のため日焼け止め");
+    } else if (isCloudy) {
+      uniqPush(outfit, "光が柔らかく、写真撮影に向いています。");
+      uniqPush(activity, "日差しが強くないので、尼ヶ淵散策など長時間の屋外も快適。");
+    }
+
+    if (outfit.length === 0 && activity.length === 0 && items.length === 0 && risk.length === 0) {
+      uniqPush(outfit, "特別な注意点はありません。快適に散策できます。");
+    }
+
+    return { outfit, activity, items, risk };
+  }
+
+  function adviceHtml(advice: Advice): string {
+    const riskBlock = advice.risk.length
+      ? `<div class="wx-risk"><span class="wx-risk-head">⚠️ 注意</span><ul>${advice.risk
+          .map((r) => `<li>${r}</li>`)
+          .join("")}</ul></div>`
+      : "";
+
+    const blocks = [
+      { key: "outfit", label: "服装", list: advice.outfit },
+      { key: "activity", label: "過ごし方", list: advice.activity },
+      { key: "items", label: "持ち物", list: advice.items },
+    ].filter((b) => b.list.length > 0);
+
+    if (blocks.length === 0) return riskBlock;
+
+    const tabs = blocks
+      .map(
+        (b, i) =>
+          `<button class="wx-tab${i === 0 ? " active" : ""}" data-t="${b.key}">${b.label}</button>`
+      )
+      .join("");
+    const panels = blocks
+      .map(
+        (b, i) =>
+          `<div class="wx-panel${i === 0 ? " active" : ""}" data-panel="${b.key}"><ul>${b.list
+            .map((s) => `<li>${s}</li>`)
+            .join("")}</ul></div>`
+      )
+      .join("");
+
+    return `${riskBlock}<div class="wx-advice"><p class="wx-advice-head">おすすめの過ごし方</p><div class="wx-tabs">${tabs}</div>${panels}</div>`;
+  }
+
+  function wireTabs(root: HTMLElement): void {
+    const tabs = root.querySelectorAll<HTMLButtonElement>(".wx-tab");
+    const panels = root.querySelectorAll<HTMLElement>(".wx-panel");
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const t = tab.dataset.t;
+        tabs.forEach((x) => x.classList.toggle("active", x === tab));
+        panels.forEach((p) => p.classList.toggle("active", p.dataset.panel === t));
+      });
+    });
+  }
+
+  function render(root: HTMLElement, data: WxResponse, compact: boolean): void {
+    const current = data.current;
+    const daily = data.daily;
+    if (!current || !daily) {
+      root.innerHTML =
+        '<div class="weather-state wx-error">天気データを取得できませんでした。後ほど再度お試しください。</div>';
+      return;
+    }
+    const cond = describe(current.weather_code);
+    const pop = daily.precipitation_probability_max[0] ?? 0;
+    const beaufort = windToBeaufort(current.wind_speed_10m);
+    const advice = buildAdvice(data);
+
+    const nowHtml = `
+      <div class="wx-now">
+        <div class="wx-temp"><span class="val">${Math.round(current.temperature_2m)}</span><span class="unit">°C</span></div>
+        <div class="wx-cond"><span class="icon">${cond.icon}</span><span>${cond.label}</span></div>
+        <div class="wx-meta">
+          <span>体感 ${Math.round(current.apparent_temperature)}° ・ 湿度 ${current.relative_humidity_2m}%</span>
+          <span>風 ${beaufort}級（${Math.round(current.wind_speed_10m)} km/h）</span>
+        </div>
+        <div class="wx-pop">降水確率 ${pop}%</div>
+      </div>`;
+
+    if (compact) {
+      root.innerHTML = nowHtml;
+      return;
+    }
+
+    const days = daily.time
+      .map((iso, i) => {
+        const c = describe(daily.weather_code[i]);
+        const max = Math.round(daily.temperature_2m_max[i]);
+        const min = Math.round(daily.temperature_2m_min[i]);
+        const p = daily.precipitation_probability_max[i] ?? 0;
+        return `
+          <div class="wx-day">
+            <div class="d-name">${dayLabel(iso, i)}</div>
+            <div class="d-icon">${c.icon}</div>
+            <div class="d-temp">${max}° / ${min}°</div>
+            <div class="d-pop">雨 ${p}%</div>
+          </div>`;
+      })
+      .join("");
+
+    root.innerHTML = `${nowHtml}${adviceHtml(advice)}<div class="wx-days">${days}</div><p class="wx-foot">直近の観測に基づく予報です。荒天時は公式の気象情報もあわせてご確認ください。</p>`;
+    wireTabs(root);
+  }
+
+  async function loadOne(root: HTMLElement): Promise<void> {
+    const lat = Number(root.dataset.lat);
+    const lon = Number(root.dataset.lon);
+    const compact = root.dataset.compact === "true";
+    const key = cacheKey(lat, lon);
+
+    const initialAttr = root.dataset.initial;
+    if (initialAttr) {
+      try {
+        render(root, JSON.parse(initialAttr) as WxResponse, compact);
+      } catch {
+        /* ignore */
+      }
+    } else {
+      try {
+        const cached = localStorage.getItem(key);
+        if (cached) {
+          const parsed = JSON.parse(cached) as { t: number; d: WxResponse };
+          if (Date.now() - parsed.t < 30 * 60 * 1000) {
+            render(root, parsed.d, compact);
+            return;
+          }
+        }
+      } catch {
+        /* ignore cache read errors */
+      }
+    }
+
+    try {
+      const url =
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
+        `&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,uv_index` +
+        `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max` +
+        `&timezone=Asia%2FTokyo&forecast_days=7`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("bad response");
+      const data = (await res.json()) as WxResponse;
+      try {
+        localStorage.setItem(key, JSON.stringify({ t: Date.now(), d: data }));
+      } catch {
+        /* ignore quota errors */
+      }
+      render(root, data, compact);
+    } catch {
+      if (!initialAttr) {
+        root.innerHTML =
+          '<div class="weather-state wx-error">天気データを取得できませんでした。後ほど再度お試しください。</div>';
+      }
+    }
+  }
+
+  document.querySelectorAll<HTMLElement>("[data-weather]").forEach((root) => {
+    void loadOne(root);
+  });
+</script>

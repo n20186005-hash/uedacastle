@@ -28,6 +28,29 @@ const defaultSchema = {
   url: new URL("/", Astro.site ?? canonical).toString(),
   inLanguage: "ja",
 };
+const breadcrumbSchema = (() => {
+  const crumbs: { name: string; url: string }[] = [
+    { name: site.name, url: new URL("/", Astro.site ?? canonical).toString() },
+  ];
+  if (Astro.url.pathname !== "/") {
+    const navMatch = site.nav.find((n) => n.href !== "/" && Astro.url.pathname.startsWith(n.href));
+    crumbs.push({ name: navMatch ? navMatch.label : title, url: canonical.toString() });
+  }
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: crumbs.map((c, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: c.name,
+      item: c.url,
+    })),
+  };
+})();
+const pageSchema = schema ?? defaultSchema;
+const allSchemas = Array.isArray(pageSchema)
+  ? [breadcrumbSchema, ...pageSchema]
+  : [breadcrumbSchema, pageSchema];
 const gaScript = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${site.gaId}',{anonymize_ip:true});`;
 ---
 <!doctype html>
@@ -50,7 +73,7 @@ const gaScript = `window.dataLayer=window.dataLayer||[];function gtag(){dataLaye
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <title>{fullTitle}</title>
-    <script type="application/ld+json" set:html={JSON.stringify(schema ?? defaultSchema)}></script>
+    <script type="application/ld+json" set:html={JSON.stringify(allSchemas)}></script>
     <script async src={`https://www.googletagmanager.com/gtag/js?id=${site.gaId}`}></script>
     <script is:inline set:html={gaScript}></script>
     <script src="/assets/site.js" defer></script>

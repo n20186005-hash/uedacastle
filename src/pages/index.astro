@@ -7,35 +7,56 @@ import RoutePlanner from "../components/RoutePlanner.astro";
 import SpotChecklist from "../components/SpotChecklist.astro";
 import SeasonSwitcher from "../components/SeasonSwitcher.astro";
 import CTA from "../components/CTA.astro";
-import { site } from "../data/site";
+import ReviewsBlock from "../components/ReviewsBlock.astro";
+import WeatherWidget from "../components/WeatherWidget.astro";
+import { site, nearbyLandmarks } from "../data/site";
 import { routes } from "../data/routes";
 import { foodThemes } from "../data/food";
+
+const place = site.googlePlace;
 
 const schema = [
   {
     "@context": "https://schema.org",
     "@type": "TouristAttraction",
-    name: "上田城跡公園",
-    alternateName: "上田城",
+    "@id": "https://uedacastle.com/#attraction",
+    name: "上田城",
+    alternateName: ["上田城跡公園", "Ueda Castle"],
     description: site.description,
-    address: { "@type": "PostalAddress", addressRegion: "長野県", addressLocality: "上田市", streetAddress: "二の丸6263番地イ", addressCountry: "JP" },
-    geo: { "@type": "GeoCoordinates", latitude: site.coordinates.latitude, longitude: site.coordinates.longitude },
+    url: "https://uedacastle.com",
+    image: ["https://uedacastle.com/images/hero-spring.webp"],
     isAccessibleForFree: true,
     publicAccess: true,
     touristType: ["歴史旅行", "城郭", "桜", "紅葉"],
+    telephone: place.phone,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "二の丸4-6",
+      addressLocality: "上田市",
+      addressRegion: "長野県",
+      postalCode: place.postalCode,
+      addressCountry: "JP",
+    },
+    geo: { "@type": "GeoCoordinates", latitude: site.coordinates.latitude, longitude: site.coordinates.longitude },
+    hasMap: place.mapsUrl,
+    sameAs: [place.mapsUrl, place.officialUrl],
   },
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: [
-      { "@type": "Question", name: "上田城に天守はありますか？", acceptedAnswer: { "@type": "Answer", text: "現在、見学できる天守はありません。櫓、櫓門、石垣、土塁、堀、尼ヶ淵の地形が主な見どころです。" } },
+      { "@type": "Question", name: "上田城に天守はありますか？", acceptedAnswer: { "@type": "Answer", text: "現在、見学できる天守はありません。西櫓、東虎口櫓門、石垣、土塁、水堀、尼ヶ淵の地形が主な見どころです。" } },
       { "@type": "Question", name: "上田城跡公園は無料ですか？", acceptedAnswer: { "@type": "Answer", text: "公園は24時間入園でき、無料です。上田市立博物館と南櫓・北櫓の内部見学は有料です。" } },
       { "@type": "Question", name: "見学時間はどのくらいですか？", acceptedAnswer: { "@type": "Answer", text: "外観中心なら30〜60分、博物館と櫓内部まで含めるなら約2時間が目安です。" } },
+      { "@type": "Question", name: "上田城はどこにありますか？", acceptedAnswer: { "@type": "Answer", text: "長野県上田市二の丸にあります。上田駅から徒歩約12分の城跡公園です。" } },
+      { "@type": "Question", name: "上田駅からはどのくらいですか？", acceptedAnswer: { "@type": "Answer", text: "上田駅の「お城口」から徒歩約12分で、二の丸橋から城跡公園へ入ります。" } },
+      { "@type": "Question", name: "おすすめの季節はいつですか？", acceptedAnswer: { "@type": "Answer", text: "春の桜と秋の紅葉が代表的です。新緑や落葉後の地形も見どころです。" } },
+      { "@type": "Question", name: "車椅子やベビーカーで歩けますか？", acceptedAnswer: { "@type": "Answer", text: "北側駐車場から二の丸・本丸へは比較的高低差を抑えられます。尼ヶ淵への行き来には階段や坂があるため、無理に下りないルートを選びます。" } },
     ],
   },
 ];
 ---
-<BaseLayout title={site.name} schema={schema}>
+<BaseLayout title="上田城（Ueda）の見どころと散策ガイド" schema={schema}>
   <section class="hero">
     <div class="container hero-grid">
       <div>
@@ -61,6 +82,12 @@ const schema = [
       {site.quickFacts.map((fact) => <div class="quick-item"><span class="quick-label">{fact.label}</span><strong class="quick-value">{fact.value}</strong></div>)}
     </div>
   </div>
+
+  <section class="section section-paper" id="reviews">
+    <div class="container">
+      <ReviewsBlock />
+    </div>
+  </section>
 
   <section class="section">
     <div class="container">
@@ -150,6 +177,29 @@ const schema = [
       </div>
       <div class="notice" style="margin-top:1.4rem"><span class="notice-icon">注</span><p>北側駐車場は工事・催事などにより利用可能台数が変わる場合があります。料金・交通規制とあわせて、出発前に公式発表をご確認ください。</p></div>
       <p style="margin-top:1.4rem"><a class="btn btn-ink" href="/access/">徒歩ルート・駐車場を確認</a></p>
+      <div class="map-embed" data-reveal style="margin-top:2.2rem">
+        <iframe
+          src={place.embedUrl}
+          width="100%"
+          height="450"
+          style="border:0;border-radius:16px"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          title="Google マップでの上田城の位置"></iframe>
+      </div>
+      <p class="small muted" style="margin-top:1rem">
+        周辺の主要スポット：{nearbyLandmarks.join("、")}。公式の営業・交通情報は
+        <a href={place.officialUrl} target="_blank" rel="noopener noreferrer">上田市 上田城公式ページ</a>
+        でご確認ください。
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="container">
+      <SectionHeading eyebrow="Today & this week" title="上田の天気をチェック" description="訪問前に、今日・数日の天気と「傘が必要か」をひと目で確認できます。" />
+      <div style="margin-top:2rem"><WeatherWidget /></div>
     </div>
   </section>
 
@@ -188,9 +238,12 @@ const schema = [
     <div class="narrow">
       <SectionHeading eyebrow="FAQ" title="出発前に知っておきたいこと。" />
       <div class="faq" style="margin-top:2rem">
-        <details><summary>上田城に天守はありますか？</summary><p>現在、見学できる天守はありません。原位置に残る西櫓、再移築された南櫓・北櫓、復元された東虎口櫓門、土塁、水堀、尼ヶ淵が主な見どころです。</p></details>
-        <details><summary>上田城跡公園は無料ですか？</summary><p>公園は24時間入園でき、無料です。上田市立博物館と南櫓・北櫓の内部は有料で、休館日と冬季休館があります。</p></details>
-        <details><summary>見学時間はどのくらい必要ですか？</summary><p>門と本丸だけなら30分、尼ヶ淵と堀まで歩くなら60分、博物館と櫓内部を含めるなら約120分を見込んでください。</p></details>
+        <details><summary>上田城に天守はありますか？</summary><p>現在、見学できる天守はありません。西櫓、東虎口櫓門、石垣、土塁、水堀、尼ヶ淵の地形が主な見どころです。</p></details>
+        <details><summary>上田城跡公園は無料ですか？</summary><p>公園は24時間入園でき、無料です。上田市立博物館と南櫓・北櫓の内部見学は有料です。</p></details>
+        <details><summary>見学時間はどのくらい必要ですか？</summary><p>外観中心なら30〜60分、博物館と櫓内部まで含めるなら約2時間が目安です。</p></details>
+        <details><summary>上田城はどこにありますか？</summary><p>長野県上田市二の丸にあります。上田駅から徒歩約12分の城跡公園です。</p></details>
+        <details><summary>上田駅からはどのくらいですか？</summary><p>上田駅の「お城口」から徒歩約12分で、二の丸橋から城跡公園へ入ります。</p></details>
+        <details><summary>おすすめの季節はいつですか？</summary><p>春の桜と秋の紅葉が代表的です。新緑や落葉後の地形も見どころです。</p></details>
         <details><summary>車椅子やベビーカーで歩けますか？</summary><p>北側駐車場から二の丸・本丸へは比較的高低差を抑えられます。尼ヶ淵への行き来には階段や坂があるため、無理に下りないルートを選びます。</p></details>
         <details><summary>雨の日でも楽しめますか？</summary><p>博物館と南・北櫓の内部を中心にすれば楽しめます。ただし屋外移動は残るため、休館日と最終入館を先に確認してください。</p></details>
       </div>

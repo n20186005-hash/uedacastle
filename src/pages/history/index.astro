@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
 import Photo from "../../components/Photo.astro";
 import CTA from "../../components/CTA.astro";
 ---
@@ -48,5 +49,29 @@ import CTA from "../../components/CTA.astro";
       </div>
     </div>
   </section>
+  <section class="section section-paper">
+    <div class="container">
+      <SectionHeading eyebrow="Stories & legends" title="上田城を語る物語" description="数字と年表の奥にある、人物と伝承の物語。現地を歩くときの「背景」としてお楽しみください。" />
+      <article class="narrow prose" style="margin-top:2rem">
+        <h2>知将・真田昌幸の評価</h2>
+        <p>昌幸は、兵力で劣る状況から二度の上田合戦で大軍を退けた戦術的な才覚で知られます。単に「強かった」ではなく、城下の道・地形・人の動きを一つの防御装置として使いこなした点が、後世の評価につながっています。</p>
+
+        <h2>幸村（信繁）と上田の記憶</h2>
+        <p>昌幸の次男・信繁（のちの幸村と称される）は上田で育ち、父とともに城を守りました。大坂の陣での活躍によって「日本一の兵（つわもの）」と評される像が定着しましたが、その原点には上田での経験があります。</p>
+
+        <h2>山手殿 — 政略の裏側を支えた人物</h2>
+        <p>昌幸の正室・山手殿は、徳川の重臣・本多忠勝の妹です。北条・徳川という巨大な勢力のはざまで真田が存続するための結婚と人間関係を、彼女の存在抜きに語ることはできません。合戦の裏にある「つながり」もまた、上田城の歴史の一部です。</p>
+
+        <h2>町人も守った城下</h2>
+        <p>第一次上田合戦では、城兵だけでなく城下の町人も守備や支援に加わった記録が残ります。「城」と「町」が一体となって動いたからこそ、少ない兵力で持ちこたえられたと言えます。現在の海野町や柳町の町並みは、その城下町の名残です。</p>
+
+        <h2>尼ヶ淵の名と地形</h2>
+        <p>「尼ヶ淵」という名の由来には諸説あり、ひとつの定説があるわけではありません。確かなのは、川の分流と崖が天然の堀となったこの地形こそが、上田城の強さの核心だったという点です。名前の謎とともに、現地で崖の下から見上げてみてください。</p>
+
+        <div class="fact-box"><strong>眞田神社が示すこと</strong><p>城址にある眞田神社は、昌幸・信繁はもちろん、信之や仙石忠政ら歴代の城主を祀っています。四百年にわたって顔ぶれが変わっても、この地が「真田の城」として記憶され続けてきたことの象徴です。</p></div>
+      </article>
+    </div>
+  </section>
+
   <section class="section section-sm"><div class="container"><CTA title="歴史を、現地の順番で歩く。" text="合戦の話だけでなく、門・本丸・西櫓・尼ヶ淵をつなぐ60分ルートへ。" href="/routes/#standard" label="標準ルートを見る" /></div></section>
 </BaseLayout>

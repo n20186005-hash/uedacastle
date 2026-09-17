@@ -3,9 +3,23 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
 import Photo from "../../components/Photo.astro";
 import CTA from "../../components/CTA.astro";
+import ReviewsBlock from "../../components/ReviewsBlock.astro";
+import WeatherWidget from "../../components/WeatherWidget.astro";
+import { site } from "../../data/site";
+
+const place = site.googlePlace;
 ---
 <BaseLayout title="アクセス・駐車場" description="上田駅から上田城までの徒歩ルート、東京・軽井沢・長野からの鉄道、上田菅平IC、北側・南側駐車場、バリアフリー動線を解説。">
   <PageHero eyebrow="Access" title="アクセス・駐車場" description="上田駅から徒歩約12分。車なら、駐車場の近さより『どこへ出るか』『高低差があるか』で選びます。" />
+
+  <section class="section section-paper">
+    <div class="container">
+      <span class="eyebrow">Before you leave</span>
+      <h2 class="section-title">訪問前に天気をチェック</h2>
+      <p>当日の気温や「傘が必要か」を確認してから出かけられます。荒天時は公式の気象情報もあわせてご覧ください。</p>
+      <div style="margin-top:1.6rem"><WeatherWidget /></div>
+    </div>
+  </section>
 
   <section class="section">
     <div class="container split">
@@ -25,6 +39,17 @@ import CTA from "../../components/CTA.astro";
           <a class="btn btn-outline" href="https://maps.apple.com/?ll=36.4035624,138.2459171&q=%E4%B8%8A%E7%94%B0%E5%9F%8E" target="_blank" rel="noreferrer">Apple マップで開く</a>
         </div>
       </div>
+    </div>
+    <div class="map-embed" data-reveal style="margin-top:2rem">
+      <iframe
+        src={place.embedUrl}
+        width="100%"
+        height="450"
+        style="border:0;border-radius:16px"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+        title="Google マップでの上田城の位置"></iframe>
     </div>
   </section>
 
@@ -47,6 +72,15 @@ import CTA from "../../components/CTA.astro";
         <article class="card"><div class="card-body"><span class="tag tag-red">尼ヶ淵へ近い</span><h3>上田城跡南側駐車場</h3><p><strong>83台。</strong></p><p>尼ヶ淵広場へ近く、西櫓を下から見たい人に便利。ただし城内へ上がるには階段・坂があります。</p></div></article>
       </div>
       <div class="notice" style="margin-top:1.4rem"><span class="notice-icon">料</span><p>通常期は入場後1時間無料、以降1時間ごと100円、当日上限500円。桜・大型連休・紅葉などの特別期間は3時間500円、当日上限1,000円となる案内があります。現地表示を優先してください。</p></div>
+      <div class="table-wrap" style="margin-top:1.4rem">
+        <table class="info-table">
+          <thead><tr><th>駐車場</th><th>台数・特徴</th><th>おすすめの人</th></tr></thead>
+          <tbody>
+            <tr><th>北側駐車場</th><td>本丸へ高低差が少なく、車椅子・優先区画あり。東虎口櫓門を最初に見たい人向け。</td><td>ファミリー、バリアフリー、荷物が多い人</td></tr>
+            <tr><th>南側駐車場</th><td>83台。尼ヶ淵広場へ近く、西櫓を下から見たい人に便利。</td><td>写真・散策重視、尼ヶ淵から入りたい人</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 
@@ -73,5 +107,129 @@ import CTA from "../../components/CTA.astro";
       <article class="card"><div class="card-body"><h2>桜・紅葉・催事日</h2><p>駐車場の特別料金、進入規制、満車が発生しやすいため、上田駅周辺へ停めて徒歩で向かう方法も検討してください。</p></div></article>
     </div>
   </section>
+
+  <section class="section section-paper">
+    <div class="container">
+      <span class="eyebrow">From the airport</span>
+      <h2 class="section-title">空港から上田城へ</h2>
+      <p>いずれの空港からも、最終的には「上田駅 お城口」から徒歩約12分です。以下は目安のルートです。</p>
+      <div class="grid-2" style="margin-top:1.6rem">
+        <article class="card"><div class="card-body"><span class="tag">成田空港 (NRT)</span><h3>東京経由</h3><p>成田エクスプレスまたは京成線で東京駅へ。そこから北陸新幹線で上田駅まで約90分。総所要は手続きを含め約3–4時間を見込みます。</p></div></article>
+        <article class="card"><div class="card-body"><span class="tag">羽田空港 (HND)</span><h3>東京・品川経由</h3><p>モノレールまたはリムジンバスで東京駅・品川へ。北陸新幹線で上田駅まで。国際線の到着時間帯によっては当日移動も可能です（約2.5–3.5時間）。</p></div></article>
+        <article class="card"><div class="card-body"><span class="tag">中部国際空港 セントレア (NGO)</span><h3>名古屋経由</h3><p>名鉄・バスで名古屋駅へ。しなの鉄道・篠ノ井線経由で長野へ出て、しなの鉄道で上田へ。または名古屋から東京を経由するルートも選べます。</p></div></article>
+        <article class="card"><div class="card-body"><span class="tag">松本空港 (MMJ)</span><h3>松本経由</h3><p>バスで松本駅へ。松本から上田までは鉄道・バスで約1.5–2時間。信州を縦断する場合に便利です。</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Public transit</span>
+      <h2 class="section-title">公共交通で着いてから、城まで</h2>
+      <div class="grid-2">
+        <article class="card"><div class="card-body"><h3>鉄道</h3><p>JR北陸新幹線・しなの鉄道・上田電鉄が上田駅に集まります。駅の「お城口」から城跡公園へは徒歩約12分です。</p></div></article>
+        <article class="card"><div class="card-body"><h3>路線バス</h3><p>上田駅から別所温泉・丸子・菖蒲方面など複数の路線があります。城址周辺は徒歩圏ですが、遠方の史跡へ向かう際に活用できます。</p></div></article>
+        <article class="card"><div class="card-body"><h3>市内循環・コミュニティバス</h3><p>観光施設を結ぶ運行があります。時刻は季節や曜日で変わるため、当日の時刻表をご確認ください。</p></div></article>
+        <article class="card"><div class="card-body"><h3>周遊を広げる</h3><p>上田電鉄別所線で別所温泉へ。真田ゆかりの史跡や北向観音など、城以外の史跡も鉄道でつながります。</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="container">
+      <span class="eyebrow">Taxi & rideshare</span>
+      <h2 class="section-title">タクシーで行く場合</h2>
+      <div class="grid-2">
+        <article class="card"><div class="card-body"><h3>駅前から城跡へ</h3><p>上田駅前に乗り場があり、城跡の北側・南側駐車場付近まで約5–10分です。ワンメーターを超える程度の目安ですが、路况で変わります。</p></div></article>
+        <article class="card"><div class="card-body"><h3>いつ使うと楽か</h3><p>荷物が多い時、雨の日、高齢の方と一緒の時、帰りに買い物をした時などに便利です。配車アプリにも対応した営業所があります。</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Facilities nearby</span>
+      <h2 class="section-title">周辺の施設・サービス（タイプでご紹介）</h2>
+      <p class="muted" style="margin-top:.4rem">特定の店舗・ブランドを推すものではなく、あると便利な施設の「種類」と「エリア」を中立的にまとめています。</p>
+      <div class="grid-3" style="margin-top:1.6rem">
+        <article class="card"><div class="card-body"><span class="tag">トイレ</span><h3>公園内・施設内</h3><p>城跡公園内、博物館、各駐車場付近にあります。小さなお子様連れや高齢の方は、入口近くの施設で先に済ませると安心です。</p></div></article>
+        <article class="card"><div class="card-body"><span class="tag">飲食</span><h3>駅前・商店街・柳町</h3><p>上田駅前、海野町商店街、中央通り、柳町の町並みに和食・そば・焼鳥・カフェなど飲食店が点在します。営業時間帯で選ぶと旅程が崩れません。</p></div></article>
+        <article class="card"><div class="card-body"><span class="tag">宿泊</span><h3>市内・別所・軽井沢</h3><p>上田市内をはじめ、別所温泉、軽井沢方面に旅館・ホテル・温泉宿などの宿泊タイプが揃います。城と温泉をセットにする滞在も定番です。</p></div></article>
+        <article class="card"><div class="card-body"><span class="tag">買い物</span><h3>駅周辺・幹線沿い</h3><p>コンビニ、スーパー、土産物店は上田駅周辺と幹線道路沿いにあります。日帰りでも必要な買い物は駅前で済ませられます。</p></div></article>
+        <article class="card"><div class="card-body"><span class="tag">給油・充電</span><h3>駅周辺・幹線沿い</h3><p>ガソリンスタンドと電気自動車（EV）充電ステーションは駅周辺と幹線道路沿いにあります。長距離ドライブの前に確認を。</p></div></article>
+        <article class="card"><div class="card-body"><span class="tag">荷物</span><h3>駅周辺の預かり</h3><p>駅近くのコインロッカー等を使えば、尼ヶ淵の階段や城下町散歩が楽になります。大型荷物は着いてすぐに預けると動きやすいです。</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="container">
+      <span class="eyebrow">Seasonal strategy</span>
+      <h2 class="section-title">季節で選ぶ旅行戦略</h2>
+      <div class="table-wrap" style="margin-top:1.4rem">
+        <table class="info-table">
+          <thead><tr><th>季節</th><th>主な見どころ</th><th>おすすめ滞在</th><th>注意点</th></tr></thead>
+          <tbody>
+            <tr><th>春（3–5月）</th><td>桜（4月上旬–中旬）、新緑の初め</td><td>60–120分</td><td>土日の混雑と満車、駐車場の特別料金に注意</td></tr>
+            <tr><th>夏（6–8月）</th><td>新緑、早朝の涼しい時間、祭り</td><td>60–120分</td><td>暑さと紫外線、こまめな水分補給</td></tr>
+            <tr><th>秋（9–11月）</th><td>紅葉（11月中旬ごろ）、晴れの日が多い</td><td>60–120分</td><td>見頃の混雑、櫓の冬季休館前の時期</td></tr>
+            <tr><th>冬（12–2月）</th><td>雪景色、落葉後の地形、静寂</td><td>30–90分</td><td>積雪・凍結、櫓内部の休館（例年11月中旬–3月）、足元に注意</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Weather, water & wildlife</span>
+      <h2 class="section-title">気象と自然の総合ガイド</h2>
+      <p>上田城の見え方は、その日の空だけでなく、一年の気候と周囲の自然に大きく左右されます。長年の平年値（気象庁の統計気候値）をベースに、訪問の目安をまとめました。</p>
+      <div class="grid-3" style="margin-top:1.6rem">
+        <article class="card"><div class="card-body"><span class="tag tag-moss">気象</span><h3>内陸の気候</h3><p>長野県東信地方は内陸性の気候です。夏は真夏日が多く暑く、冬は寒くて積雪があります。春と秋は過ごしやすく、年間を通じて晴れの日が多い傾向にあります。降水量は夏の雨と冬の雪に集中します。</p></div></article>
+        <article class="card"><div class="card-body"><span class="tag tag-blue">水辺</span><h3>千曲川と尼ヶ淵</h3><p>かつて尼ヶ淵の崖は千曲川の分流が侵食して生まれ、城の天然の防御になりました。現在は静かな広場ですが、増水時や出水後は足元がぬかるむことがあります。川の水位にも注意してください。</p></div></article>
+        <article class="card"><div class="card-body"><span class="tag tag-red">野生動物</span><h3>身近な生きもの</h3><p>都市近郊のため、カラスなど鳥類の姿をよく見ます。川辺ではカワセミなどにも出会えます。生態系を守るため、餌やりは行わず、自然のまま観察する姿勢を心がけましょう。</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="container">
+      <span class="eyebrow">Plans by traveler type</span>
+      <h2 class="section-title">旅のスタイル別プラン</h2>
+      <div class="grid-3" style="margin-top:1.6rem">
+        <article class="card"><div class="card-body"><span class="tag">親子家族</span><h3>元気に走り回ぶプラン</h3><p>北側駐車場から本丸広場へ。開けた場所で休憩を挟みながら、博物館と柳町の散歩へ。トイレとベンチを意識した動線です。</p><a class="btn btn-outline btn-sm" href="/routes/#half-day">半日コースへ</a></div></article>
+        <article class="card"><div class="card-body"><span class="tag">写真・自然</span><h3>光を追うプラン</h3><p>早朝の桜・紅葉、尼ヶ淵の差し込む光、西櫓の影。三脚の使用場所と他の見学者への配慮を守りながら、時間帯を変えて回ります。</p><a class="btn btn-outline btn-sm" href="/routes/#standard">標準ルートへ</a></div></article>
+        <article class="card"><div class="card-body"><span class="tag">低体力・バリアフリー</span><h3>ゆっくり安心プラン</h3><p>北側動線で高低差を抑え、ベンチで休みながら。博物館と櫓内部を中心に、無理なく見どころを拾います。</p><a class="btn btn-outline btn-sm" href="/routes/#accessible">配慮ルートへ</a></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Visitor responsibility</span>
+      <h2 class="section-title">訪客のマナーと責任</h2>
+      <p>上田城跡は国史跡であり、多くの人が未来に引き継ぐ場所です。専門的な保全の視点を持って、皆で守りましょう。</p>
+      <ul class="checklist" style="margin-top:1.2rem">
+        <li>ゴミは持ち帰り、敷地外のごみ箱も利用しましょう。</li>
+        <li>石垣・土塁・櫓は触れず、立入禁止区域と柵内には入りません。</li>
+        <li>野生動物への餌やりは行いません。自然のまま観察します。</li>
+        <li>写真撮影は三脚の設置場所と他者の通行を妨げない範囲で。ドローン等の飛行規制に従います。</li>
+        <li>史跡を傷つけないよう、現状をそのまま楽しむ姿勢を大切にします。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="container">
+      <ReviewsBlock compact={true} heading={false} />
+      <p class="small muted" style="margin-top:1.4rem">
+        公式の営業・交通情報は
+        <a href={place.officialUrl} target="_blank" rel="noopener noreferrer">上田市 上田城公式ページ</a>
+        でご確認ください。
+      </p>
+    </div>
+  </section>
+
   <section class="section section-sm"><div class="container"><CTA title="入口が決まったら、歩く順番へ。" text="30分・60分・120分から、無理のない散策を選びます。" href="/routes/" label="ルートを選ぶ" /></div></section>
 </BaseLayout>

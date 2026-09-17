@@ -1,0 +1,198 @@
+---
+import { site } from "../data/site";
+import SectionHeading from "./SectionHeading.astro";
+
+interface Props {
+  compact?: boolean;
+  heading?: boolean;
+}
+const { compact = false, heading = true } = Astro.props;
+const place = site.googlePlace;
+const starsPct = Math.max(0, Math.min(100, Math.round((place.rating / 5) * 100)));
+const reviewLabel = place.reviewCount.toLocaleString("en-US");
+---
+
+{
+  heading && (
+    <SectionHeading
+      eyebrow="Google Maps reviews"
+      title="Google マップの評価"
+      description="上田城の評価スコアと口コミ数は、Google マップ（Google Maps）のユーザー投稿を同期しています。"
+    />
+  )
+}
+
+<article class="reviews-card" data-reveal>
+  <div class="reviews-head">
+    <div class="reviews-score">
+      <span class="reviews-number" aria-hidden="true">{place.rating.toFixed(1)}</span>
+      <div class="reviews-starwrap">
+        <div class="reviews-stars" style={`--pct:${starsPct}%`} role="img" aria-label={`Google マップの評価 ${place.rating} / 5（口コミ ${reviewLabel} 件）`}>
+          <span class="stars-bg">★★★★★</span>
+          <span class="stars-fg">★★★★★</span>
+        </div>
+        <span class="reviews-count">({reviewLabel})</span>
+      </div>
+    </div>
+    <p class="reviews-category">{place.category} · Google マップ</p>
+  </div>
+
+  <dl class="reviews-meta">
+    <div><dt>住所</dt><dd>{place.address}（〒{place.postalCode}）</dd></div>
+    <div><dt>電話</dt><dd><a href={`tel:${place.phone.replace(/\s|-/g, "")}`}>{place.phone}</a></dd></div>
+    <div><dt>プラスコード</dt><dd>{place.plusCode}</dd></div>
+  </dl>
+
+  <p class="reviews-source">
+    評価スコアと口コミ数は <a href={place.mapsUrl} target="_blank" rel="noopener noreferrer">Google マップ（Google Maps）</a> のユーザー投稿を同期しています · {place.syncMonth} ·
+    <a href={place.mapsUrl} target="_blank" rel="noopener noreferrer">Google マップで全ての評価を見る ↗</a>
+  </p>
+
+  <a class="btn btn-primary" href={place.mapsUrl} target="_blank" rel="noopener noreferrer">Google マップですべての評価を見る</a>
+
+  <p class="reviews-copyright">
+    本評価は Google マップのユーザー投稿を同期（{place.syncMonth}）。著作権は原作者および Google マップに帰属します。
+  </p>
+</article>
+
+{
+  !compact && (
+    <aside class="reviews-sources" data-reveal>
+      <h3>資料の出典</h3>
+      <ul>
+        <li>
+          <span class="src-tag">評価</span>
+          <span>同期 {place.syncMonth} — <a href={place.mapsUrl} target="_blank" rel="noopener noreferrer">Google マップのユーザー評価</a></span>
+        </li>
+      </ul>
+      <p class="small muted">
+        評価スコアと口コミ数は Google マップ（Google Maps）のユーザー投稿を同期。著作権は原作者および Google マップに帰属します。
+      </p>
+    </aside>
+  )
+}
+
+<style>
+  .reviews-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 2.2rem 2rem;
+    box-shadow: var(--shadow-small);
+    max-width: 720px;
+  }
+  .reviews-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .reviews-score {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+  }
+  .reviews-number {
+    font-family: var(--serif);
+    font-size: 3.4rem;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .reviews-starwrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .reviews-stars {
+    position: relative;
+    display: inline-block;
+    font-size: 1.35rem;
+    line-height: 1;
+    letter-spacing: 0.12em;
+  }
+  .stars-bg { color: #ddd6c8; }
+  .stars-fg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--pct, 0%);
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--red);
+  }
+  .reviews-count { color: var(--stone); font-size: 0.92rem; }
+  .reviews-category {
+    margin: 0;
+    font-size: 0.86rem;
+    color: var(--moss-dark);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .reviews-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.9rem 1.4rem;
+    margin: 1.6rem 0 1.2rem;
+    padding: 1.2rem 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .reviews-meta div { margin: 0; }
+  .reviews-meta dt {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 0.25rem;
+  }
+  .reviews-meta dd { margin: 0; font-size: 0.95rem; }
+  .reviews-meta a { color: var(--red); }
+  .reviews-source {
+    margin: 0 0 1.2rem;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+  .reviews-source a { color: var(--red); }
+  .reviews-copyright {
+    margin: 1.1rem 0 0;
+    font-size: 0.78rem;
+    color: var(--stone);
+    line-height: 1.7;
+  }
+  .btn-primary { display: inline-block; }
+  .reviews-sources {
+    margin-top: 1.6rem;
+    padding: 1.2rem 1.4rem;
+    background: var(--paper-light);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-small);
+    max-width: 720px;
+  }
+  .reviews-sources h3 {
+    margin: 0 0 0.8rem;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+  }
+  .reviews-sources ul {
+    list-style: none;
+    margin: 0 0 0.6rem;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+  .reviews-sources a { color: var(--red); }
+  .src-tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    padding: 0.12rem 0.5rem;
+    margin-right: 0.5rem;
+    border-radius: 999px;
+    background: var(--moss);
+    color: #fff;
+    vertical-align: middle;
+  }
+</style>
